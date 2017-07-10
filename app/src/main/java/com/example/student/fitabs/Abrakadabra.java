@@ -5,4 +5,5 @@ public class Abrakadabra {
     String kiril = "privet!";
     String sandra = "Hi";
     String karina = "OK";
+    String Dagader = "First launch";
 }
