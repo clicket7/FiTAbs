@@ -6,4 +6,5 @@ public class Abrakadabra {
     String sandra = "Hi";
     String karina = "OK";
     String Dagader = "First launch";
+    int j = 0;
 }
