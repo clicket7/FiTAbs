@@ -3,7 +3,6 @@ package com.example.student.fitabs;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import com.example.student.fitabs.User;
 
 public class UserSettingsActivity extends AppCompatActivity {
 
