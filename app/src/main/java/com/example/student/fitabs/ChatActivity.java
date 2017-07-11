@@ -33,7 +33,6 @@ public class ChatActivity extends AppCompatActivity {
         ArrayAdapter<ChatMessage> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
         // creating adapter for adding all messages to chat window
         chatWindow.setAdapter(adapter); // adding messages to chat window through adapter
-        
     }
 
     public void closeActivity() {
