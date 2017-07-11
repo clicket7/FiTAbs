@@ -36,7 +36,7 @@ public class UserSettingsActivity extends AppCompatActivity {
     }
 
     public void saveUser(View view) {
-        if (editUsername.getText().toString().equals("") || editNumber.getText().toString().equals("") || !checkStatus.isChecked()) {
+        if (editUsername.getText().toString().equals("") || editNumber.getText().toString().equals("") ) {
             Toast toast = Toast.makeText(getApplicationContext(), "Please, fill in all fields", Toast.LENGTH_LONG);
             toast.show();
         } else {
@@ -56,9 +56,6 @@ public class UserSettingsActivity extends AppCompatActivity {
 
             database.insert(DBHandler.TABLE_USERS, null, contentValues);
 
-            editUsername.setText("");
-            editNumber.setText("");
-            checkStatus.setChecked(false);
 
         }
     }
