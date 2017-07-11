@@ -2,5 +2,6 @@
     <string name="app_name">FiTAbs</string>
     <string name="current_date">July, 2017</string>
     <string name="hello">Hello World, FitCalendar!</string>
+    <string name="noValueEntered">Please, fill in all fields</string>
 
 </resources>
