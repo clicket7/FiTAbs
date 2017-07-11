@@ -38,9 +38,9 @@
         android:id="@+id/send"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="sendMsg"
-        android:text="Send"
-        android:layout_marginTop="11dp"
         android:layout_below="@+id/editText"
-        android:layout_toEndOf="@+id/contact" />
+        android:layout_marginTop="11dp"
+        android:layout_toEndOf="@+id/contact"
+        android:onClick="sendMsg"
+        android:text="@string/send" />
 </RelativeLayout>

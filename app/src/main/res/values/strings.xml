@@ -7,5 +7,7 @@
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="send">Send</string>
+    <string name="contacts">Contacts</string>
 
 </resources>
