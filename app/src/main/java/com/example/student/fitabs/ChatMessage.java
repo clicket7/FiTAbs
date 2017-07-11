@@ -22,7 +22,15 @@ public class ChatMessage {
         return author;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public String getMsg() {
         return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }
