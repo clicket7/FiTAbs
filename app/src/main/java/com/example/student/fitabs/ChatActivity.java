@@ -35,8 +35,4 @@ public class ChatActivity extends AppCompatActivity {
         chatWindow.setAdapter(adapter); // adding messages to chat window through adapter
         
     }
-
-    public void closeActivity() {
-        finish();
-    }
 }
