@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //Chat
                     case R.id.action_chat:
+                        startActivity(new Intent(MainActivity.this, ChatActivity.class));
                         //Toast.makeText(MainActivity.this, "Chat", Toast.LENGTH_SHORT).show();
 
 
