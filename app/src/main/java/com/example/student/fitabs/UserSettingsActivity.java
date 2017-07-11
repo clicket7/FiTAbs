@@ -39,7 +39,7 @@ public class UserSettingsActivity extends AppCompatActivity {
 
     public void saveUser(View view) {
         if (editUsername.getText().toString().equals("") || editNumber.getText().toString().equals("") ) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Please, fill in all fields", Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.noValueEntered), Toast.LENGTH_LONG);
             toast.show();
         } else {
             User user = new User();
