@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Define bottom navigation view (thats why design library in gradle was imported)
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById (R.id.bottom_navigation);
-        
+
         //Display right icon
         bottomNavigationView.getMenu().getItem(0).setChecked(true);
 
@@ -36,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
                     //Chat
                     case R.id.action_chat:
                         startActivity(new Intent(MainActivity.this, ChatActivity.class));
+                        startActivity(new Intent(MainActivity.this, ChatActivity.class));
+                        //Toast.makeText(MainActivity.this, "Chat", Toast.LENGTH_SHORT).show();
+
+
                         break;
 
                     //Calendar
