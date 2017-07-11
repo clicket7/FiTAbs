@@ -19,6 +19,8 @@ public class ContactsActivity extends AppCompatActivity {
 
     public void readFromDatabase() {
     // function for reading table with all contacts
+
+        
     }
 
     public void closeActivity() {
