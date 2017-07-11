@@ -22,8 +22,6 @@ public class UserSettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_settings);
 
-        
-
         editUsername = (EditText) findViewById(R.id.editUsername);
         editNumber = (EditText) findViewById(R.id.editTelNumber);
         checkStatus = (CheckBox) findViewById(R.id.checkBoxStatus);
@@ -49,6 +47,7 @@ public class UserSettingsActivity extends AppCompatActivity {
             SQLiteDatabase database = dbHandler.getWritableDatabase();
 
             ContentValues contentValues = new ContentValues();
+            
 
             contentValues.put(DBHandler.KEY_USERNAME, user.getName());
             contentValues.put(DBHandler.KEY_TEL_NUMBER, user.getTelnumber());
