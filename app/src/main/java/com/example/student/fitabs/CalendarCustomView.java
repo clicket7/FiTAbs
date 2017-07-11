@@ -30,7 +30,7 @@ public class CalendarCustomView extends LinearLayout{
     private SimpleDateFormat formatter = new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH);
     private Calendar cal = Calendar.getInstance(Locale.ENGLISH);
     private Context context;
-    private GridAdapter mAdapter;
+ //   private GridAdapter mAdapter;
  //   private DatabaseQuery mQuery;
     public CalendarCustomView(Context context) {
         super(context);
@@ -50,13 +50,13 @@ public class CalendarCustomView extends LinearLayout{
     }
     private void initializeUILayout(){
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
-   /*     View view = inflater.inflate(R.layout.calendar_layout, this);
+        View view = inflater.inflate(R.layout.activity_calendar, this);
         previousButton = (ImageView)view.findViewById(R.id.previous_month);
         nextButton = (ImageView)view.findViewById(R.id.next_month);
         currentDate = (TextView)view.findViewById(R.id.display_current_date);
         addEventButton = (Button)view.findViewById(R.id.add_calendar_event);
         calendarGridView = (GridView)view.findViewById(R.id.calendar_grid);
-        */
+
     }
     private void setPreviousButtonClickEvent(){
         previousButton.setOnClickListener(new OnClickListener() {
