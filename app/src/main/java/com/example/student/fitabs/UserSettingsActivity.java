@@ -32,6 +32,7 @@ public class UserSettingsActivity extends AppCompatActivity {
         editUsername.setText(user.getName());
         editNumber.setText(user.getTelnumber());
         checkStatus.setChecked(user.getStatus());
+
     }
 
     public void saveUser(View view) {
@@ -47,7 +48,7 @@ public class UserSettingsActivity extends AppCompatActivity {
             SQLiteDatabase database = dbHandler.getWritableDatabase();
 
             ContentValues contentValues = new ContentValues();
-            
+
 
             contentValues.put(DBHandler.KEY_USERNAME, user.getName());
             contentValues.put(DBHandler.KEY_TEL_NUMBER, user.getTelnumber());
@@ -66,6 +67,7 @@ public class UserSettingsActivity extends AppCompatActivity {
 
 
     public void closeUserSettings(View view) {
+        dbHandler.close();
         finish();
     }
 }
