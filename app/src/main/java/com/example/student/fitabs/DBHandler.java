@@ -18,16 +18,16 @@ import static android.provider.Contacts.SettingsColumns.KEY;
 public class DBHandler extends SQLiteOpenHelper {
 
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 1;
     // Database Name
-    private static final String DATABASE_NAME = "userInfo";
+    public static final String DATABASE_NAME = "userInfo";
     // Contacts table name
-    private static final String TABLE_USERS= "users";
+    public static final String TABLE_USERS= "users";
     // USer Table Columns names
-    private static final String KEY_ID= "ID";
-    private static final String KEY_USERNAME= "Username";
-    private static final String KEY_TEL_NUMBER= "Telephone Number";
-    private static final String KEY_IS_TRENER= "Is Trener";
+    public static final String KEY_ID= "ID";
+    public static final String KEY_USERNAME= "Username";
+    public static final String KEY_TEL_NUMBER= "TelephoneNumber";
+    public static final String KEY_IS_TRENER= "IsTrener";
     public DBHandler(Context context){
         super(context,DATABASE_NAME,null,DATABASE_VERSION);}
 

@@ -1,11 +1,11 @@
 package com.example.student.fitabs;
+
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationMenu;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //Chat
                     case R.id.action_chat:
+                        startActivity(new Intent(MainActivity.this, ChatActivity.class));
                         //Toast.makeText(MainActivity.this, "Chat", Toast.LENGTH_SHORT).show();
 
 
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //Calendar
                     case R.id.action_calendar:
+                        startActivity(new Intent(MainActivity.this, MyCalendarActivity.class));
                         //Toast.makeText(MainActivity.this, "Calendar", Toast.LENGTH_SHORT).show();
 
 
