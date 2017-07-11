@@ -11,12 +11,14 @@ public class User {
     private boolean isCoach;
 
     public User() {
+        this.id = 0;
         this.name = "New user";
         this.telnumber = "No number";
         this.isCoach = false;
     }
 
-    public User(String name, String number, boolean status) {//
+    public User(int id, String name, String number, boolean status) {
+        this.id = id;
         this.name = name;
         this.telnumber =  number;
         this.isCoach = status;
