@@ -52,9 +52,9 @@ public class DBHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         //map user values with table’s column using ContentValues object
         ContentValues values = new ContentValues();
-        values.put(KEY_USERNAME, user.getUsername());
-        values.put(KEY_TEL_NUMBER, user.getTelNumber());
-        values.put(KEY_IS_TRENER, user.isTrener());
+        values.put(KEY_USERNAME, user.getName());
+        values.put(KEY_TEL_NUMBER, user.getTelnumber());
+        values.put(KEY_IS_TRENER, user.getStatus());
         // Inserting Row
         db.insert(TABLE_USERS, null, values);
         db.close(); // Closing database connection
@@ -68,8 +68,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
-        User contact = new User(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2), cursor.getInt(3) > 0);
+        User contact = new User(cursor.getString(1), cursor.getString(2), cursor.getInt(3) > 0);
         // return shop
         return contact;
     }
@@ -86,9 +85,9 @@ public class DBHandler extends SQLiteOpenHelper {
             do {
                 User user = new User();
                 user.setId(Integer.parseInt(cursor.getString(0)));
-                user.setUsername(cursor.getString(1));
-                user.setTelNumber(cursor.getString(2));
-                user.setTrener(cursor.getInt(3) > 0);
+                user.setName(cursor.getString(1));
+                user.setTelnumber(cursor.getString(2));
+                user.setStatus(cursor.getInt(3) > 0);
                 // Adding contact to list
                 userList.add(user);
             } while (cursor.moveToNext());
@@ -111,9 +110,9 @@ public class DBHandler extends SQLiteOpenHelper {
     public int updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(KEY_USERNAME, user.getUsername());
-        values.put(KEY_TEL_NUMBER, user.getTelNumber());
-        values.put(KEY_IS_TRENER, user.isTrener());
+        values.put(KEY_USERNAME, user.getName());
+        values.put(KEY_TEL_NUMBER, user.getTelnumber());
+        values.put(KEY_IS_TRENER, user.getStatus());
         // updating row
         return db.update(TABLE_USERS, values, KEY_ID + " = ?",
                 new String[]{String.valueOf(user.getId())});
