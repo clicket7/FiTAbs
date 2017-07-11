@@ -27,6 +27,8 @@ public class UserSettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_settings);
 
+        
+
         editUsername = (EditText) findViewById(R.id.editUsername);
         editNumber = (EditText) findViewById(R.id.editTelNumber);
         checkStatus = (CheckBox) findViewById(R.id.checkBoxStatus);
