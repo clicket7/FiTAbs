@@ -15,12 +15,12 @@ public class UserSettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_settings);
-
+        // initialization of variables and creating new empty object User
         editUsername = (EditText) findViewById(R.id.editUsername);
         editNumber = (EditText) findViewById(R.id.editTelNumber);
         checkStatus = (CheckBox) findViewById(R.id.checkBoxStatus);
         User user = new User();
-
+        // setting EditText value to default values
         editUsername.setText(user.getName());
         editNumber.setText(user.getTelnumber());
         checkStatus.setChecked(user.getStatus());

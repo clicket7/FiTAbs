@@ -23,15 +23,16 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         chatMessages = new ArrayList<ChatMessage>();
         chatWindow = (ListView) findViewById(R.id.chat);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.activity_chat); // initialization of variables and creating activity view
     }
 
     public void sendMsg() {
         msg = findViewById(R.id.editText).toString();
-        ChatMessage message = new ChatMessage("Kirils", msg);
-        chatMessages.add(message);
+        ChatMessage message = new ChatMessage("Kirils", msg); // creating message object
+        chatMessages.add(message); // adding message to List of ChatMessage
         ArrayAdapter<ChatMessage> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
-        chatWindow.setAdapter(adapter);
+        // creating adapter for adding all messages to chat window
+        chatWindow.setAdapter(adapter); // adding messages to chat window through adapter
     }
 
     public void closeActivity() {
