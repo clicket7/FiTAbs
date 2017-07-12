@@ -89,9 +89,6 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
         //Define bottom navigation view (thats why design library in gradle was imported)
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById (R.id.bottom_navigation);
 
-        //Display right icon
-        bottomNavigationView.getMenu().getItem(2).setChecked(true);
-
         //Define Bottom navigation view listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
