@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -24,6 +23,7 @@ public class ChatActivity extends AppCompatActivity {
     ListView chatWindow;
     EditText editMessage;
     ChatMessage message = new ChatMessage();
+    ChatClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +69,11 @@ public class ChatActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
+        chatWindow.setAdapter(adapter);
+
+        new connectTask().execute("");
     }
 
     public void sendMsg(View view) {
@@ -80,6 +85,9 @@ public class ChatActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
         // creating adapter for adding all messages to chat window
         chatWindow.setAdapter(adapter); // adding messages to chat window through adapter
+        if (client != null) {
+            client.sendMessage(message.getAuthor() + ": " + message.getMsg());
+        }
         editMessage.setText("");
     }
 }

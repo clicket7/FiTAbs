@@ -17,7 +17,7 @@ public class User {
         this.isCoach = false;
     }
 
-    public User(int id, String name, String number, boolean status) {
+    public User(String name, String number, boolean status) {
         this.id = id;
         this.name = name;
         this.telnumber =  number;
