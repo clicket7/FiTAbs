@@ -97,12 +97,4 @@ public class UserSettingsActivity extends AppCompatActivity {
 
         }
     }
-
-    //public void
-
-
-    public void closeUserSettings(View view) {
-        dbHandler.close();
-        finish();
-    }
 }
