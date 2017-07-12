@@ -13,7 +13,7 @@
         android:fontFamily="serif"
         android:text="@string/contacts"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
-
+    
     <ListView
         android:id="@+id/contacts"
         android:layout_width="match_parent"
