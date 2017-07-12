@@ -11,14 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" android:noHistory="true">
+        <activity android:name=".ContactsActivity" android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ContactsActivity" android:noHistory="true" />
         <activity android:name=".UserSettingsActivity" android:noHistory="true" />
         <activity android:name=".ChatActivity" android:noHistory="true" android:windowSoftInputMode="stateHidden" />
         <activity android:name=".MyCalendarActivity" android:noHistory="true" />
