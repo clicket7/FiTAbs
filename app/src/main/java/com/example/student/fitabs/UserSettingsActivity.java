@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
@@ -40,7 +41,10 @@ public class UserSettingsActivity extends AppCompatActivity {
 
         //Define bottom navigation view (thats why design library in gradle was imported)
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById (R.id.bottom_navigation);
-        bottomNavigationView.getMenu().getItem(3).setEnabled(true);
+
+        //Display right icon
+        bottomNavigationView.getMenu().getItem(3).setChecked(true);
+
         //Define Bottom navigation view listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
