@@ -46,8 +46,9 @@ public class User {
     }
 
     public void setTelnumber(String number) {
-        if (number.length() > 20) {
-            number = number.substring(0, 19);
+        if (number.length() > 9) {
+            number = number.substring(0, 8);
+
         }
         this.telnumber = number;
     }
