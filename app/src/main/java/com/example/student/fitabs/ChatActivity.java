@@ -5,13 +5,20 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 
@@ -24,7 +31,10 @@ public class ChatActivity extends AppCompatActivity {
     ListView chatWindow;
     EditText editMessage;
     ChatMessage message = new ChatMessage();
-    ChatClient client;
+
+    private Socket socket;
+    private static int port = 9999;
+    private String host = "192.168.8.121";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +84,9 @@ public class ChatActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
         chatWindow.setAdapter(adapter);
 
-        new connectTask().execute("");
+        new Thread(new ClientThread()).start();
     }
+
 
     public void sendMsg(View view) {
         String msg = editMessage.getText().toString();
@@ -86,9 +97,27 @@ public class ChatActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
         // creating adapter for adding all messages to chat window
         chatWindow.setAdapter(adapter); // adding messages to chat window through adapter
-        if (client != null) {
-            client.sendMessage(message.getAuthor() + ": " + message.getMsg());
-        }
         editMessage.setText("");
+        PrintWriter out = null;
+        try {
+            out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+            out.print(message.getMsg());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    class ClientThread implements Runnable {
+
+        @Override
+        public void run() {
+            try {
+                InetAddress serverAddr = InetAddress.getByName(host);
+                socket = new Socket(serverAddr, port);
+            } catch (Exception e1) {
+                Log.e("Connection", "Error");
+            }
+        }
     }
 }
