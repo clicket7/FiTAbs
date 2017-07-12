@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,6 +27,9 @@ public class ContactsActivity extends AppCompatActivity {
 
         //Define bottom navigation view (thats why design library in gradle was imported)
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById (R.id.bottom_navigation);
+
+        //Display right icon
+        bottomNavigationView.getMenu().getItem(0).setChecked(true);
 
         //Define Bottom navigation view listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
