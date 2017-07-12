@@ -19,9 +19,8 @@
         <activity android:name=".ContactsActivity" android:noHistory="true" />
         <activity android:name=".UserSettingsActivity" android:noHistory="true" />
         <activity android:name=".ChatActivity" android:noHistory="true" />
-        <activity android:name=".MyCalendarActivity" android:noHistory="true" >
-
-        </activity>
+        <activity android:name=".MyCalendarActivity" android:noHistory="true" />
+        <activity android:name=".AddContactActivity" android:noHistory="true" />
     </application>
 
 </manifest>
