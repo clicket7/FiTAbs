@@ -100,7 +100,7 @@ public class ChatActivity extends AppCompatActivity {
         editMessage.setText("");
         PrintWriter out = null;
         try {
-            out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+            out = new PrintWriter(socket.getOutputStream(), true);
             out.print(message.getMsg());
         } catch (IOException e) {
             e.printStackTrace();
