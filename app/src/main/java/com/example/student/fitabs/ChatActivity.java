@@ -42,7 +42,7 @@ public class ChatActivity extends AppCompatActivity {
 
         //Define bottom navigation view (thats why design library in gradle was imported)
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById (R.id.bottom_navigation);
-
+        bottomNavigationView.getMenu().getItem(1).setEnabled(true);
         //Define Bottom navigation view listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
 
