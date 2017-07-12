@@ -1,9 +1,14 @@
 package com.example.student.fitabs;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -33,6 +38,43 @@ public class UserSettingsActivity extends AppCompatActivity {
         editNumber.setText(user.getTelnumber());
         checkStatus.setChecked(user.getStatus());
 
+
+        //Define bottom navigation view (thats why design library in gradle was imported)
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById (R.id.bottom_navigation);
+
+        //Display right icon
+        bottomNavigationView.getMenu().getItem(3).setChecked(true);
+
+        //Define Bottom navigation view listener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+            //Selected icon(item) - changes to the appropriate view
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId())
+                {
+                    //Contacts
+                    case R.id.action_contacts:
+                        startActivity(new Intent(UserSettingsActivity.this, ContactsActivity.class));
+                        break;
+
+                    //Chat
+                    case R.id.action_chat:
+                        startActivity(new Intent(UserSettingsActivity.this, ChatActivity.class));
+                        break;
+
+                    //Calendar
+                    case R.id.action_calendar:
+                        startActivity(new Intent(UserSettingsActivity.this, MyCalendarActivity.class));
+                        break;
+
+                    //Settings
+                    case R.id.action_settings:
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     public void saveUser(View view) {
@@ -58,13 +100,5 @@ public class UserSettingsActivity extends AppCompatActivity {
 
 
         }
-    }
-
-    //public void
-
-
-    public void closeUserSettings(View view) {
-        dbHandler.close();
-        finish();
     }
 }

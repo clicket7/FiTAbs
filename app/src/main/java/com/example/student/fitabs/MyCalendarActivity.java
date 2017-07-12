@@ -4,10 +4,14 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -80,6 +84,44 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
                 R.id.calendar_day_gridcell, month, year);
         adapter.notifyDataSetChanged();
         calendarView.setAdapter(adapter);
+
+
+        //Define bottom navigation view (thats why design library in gradle was imported)
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById (R.id.bottom_navigation);
+
+        //Display right icon
+        bottomNavigationView.getMenu().getItem(2).setChecked(true);
+
+        //Define Bottom navigation view listener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+            //Selected icon(item) - changes to the appropriate view
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId())
+                {
+                    //Contacts
+                    case R.id.action_contacts:
+                        startActivity(new Intent(MyCalendarActivity.this, ContactsActivity.class));
+                        break;
+
+                    //Chat
+                    case R.id.action_chat:
+                        startActivity(new Intent(MyCalendarActivity.this, ChatActivity.class));
+                        break;
+
+                    //Calendar
+                    case R.id.action_calendar:
+                        break;
+
+                    //Settings
+                    case R.id.action_settings:
+                        startActivity(new Intent(MyCalendarActivity.this, UserSettingsActivity.class));
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     /**

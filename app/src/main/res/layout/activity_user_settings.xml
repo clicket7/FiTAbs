@@ -70,7 +70,6 @@
         android:inputType="textPersonName"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintRight_creator="1"
-        app:layout_constraintRight_toRightOf="@+id/buttonCloseSettings"
         android:layout_marginTop="14dp"
         app:layout_constraintTop_toBottomOf="@+id/editUsername"
         tools:layout_constraintLeft_creator="1"
@@ -138,16 +137,19 @@
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent" />
 
-    <Button
-        android:id="@+id/buttonCloseSettings"
-        android:layout_width="wrap_content"
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:onClick="closeUserSettings"
-        android:text="Back"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/colorPrimary"
+        app:itemIconTint="@drawable/nav_item_color_state"
+        app:itemTextColor="@drawable/nav_item_color_state"
+        app:menu="@menu/bottom_navigation_main"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="0dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="0dp" >
+    </android.support.design.widget.BottomNavigationView>
+
 </android.support.constraint.ConstraintLayout>
