@@ -8,17 +8,14 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 
-import static android.R.attr.id;
-import static android.R.attr.name;
 
 public class UserSettingsActivity extends AppCompatActivity {
 
@@ -27,9 +24,10 @@ public class UserSettingsActivity extends AppCompatActivity {
     DBHandler dbHandler;
     Integer activeId;
     ArrayList<Integer> id = new ArrayList<>();
-    ArrayList<String> names = new ArrayList<>();
+    ArrayList<String> usernames = new ArrayList<>();
     ArrayList<String> telNumber = new ArrayList<>();
     ArrayList<Boolean> isTrener = new ArrayList<>();
+    User user = new User();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +37,7 @@ public class UserSettingsActivity extends AppCompatActivity {
         editUsername = (EditText) findViewById(R.id.editUsername);
         editNumber = (EditText) findViewById(R.id.editTelNumber);
         checkStatus = (CheckBox) findViewById(R.id.checkBoxStatus);
-        User user = new User();
+
 
         dbHandler = new DBHandler(this);
 
@@ -48,7 +46,7 @@ public class UserSettingsActivity extends AppCompatActivity {
         checkStatus.setChecked(user.getStatus());
 
         SQLiteDatabase database = dbHandler.getReadableDatabase();
-        Cursor cursor = database.query(DBHandler.TABLE_USERS,
+        Cursor cursor = database.query(DBHandler.TABLE_USER,
                 null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
             int idIndex = cursor.getColumnIndex(dbHandler.KEY_ID);
@@ -57,7 +55,7 @@ public class UserSettingsActivity extends AppCompatActivity {
             int statusIndex = cursor.getColumnIndex(dbHandler.KEY_IS_TRENER);
             do {
                 id.add(cursor.getInt(idIndex));
-                names.add(cursor.getString(usernameIndex));
+                usernames.add(cursor.getString(usernameIndex));
                 telNumber.add(cursor.getString(telNumberIndex));
                 isTrener.add(cursor.getInt(statusIndex) > 0);
 
@@ -66,6 +64,12 @@ public class UserSettingsActivity extends AppCompatActivity {
         } else{
             Toast toast = Toast.makeText(getApplicationContext(), "Table is empty", Toast.LENGTH_LONG);
             toast.show();
+        }
+        if (!id.isEmpty()) {
+            editUsername.setText(usernames.get(0));
+            editNumber.setText(telNumber.get(0) );
+            checkStatus.setChecked(isTrener.get(0));
+            activeId = id.get(0);
         }
         dbHandler.close();
 
@@ -114,9 +118,8 @@ public class UserSettingsActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.noValueEntered), Toast.LENGTH_LONG);
             toast.show();
         }
-        //creates new user with entered info
+        //creates user with entered info
         else {
-            User user = new User();
             user.setName(editUsername.getText().toString());
             user.setTelnumber(editNumber.getText().toString());
             user.setStatus(checkStatus.isChecked());
@@ -130,11 +133,13 @@ public class UserSettingsActivity extends AppCompatActivity {
             contentValues.put(DBHandler.KEY_TEL_NUMBER, user.getTelnumber());
             contentValues.put(DBHandler.KEY_IS_TRENER, user.getStatus());
 
-            database.insert(DBHandler.TABLE_USERS, null, contentValues);
+            database.insert(DBHandler.TABLE_USER, null, contentValues);
 
             Toast toast = Toast.makeText (getApplicationContext(), getString(R.string.saveSucc), Toast.LENGTH_LONG);
             toast.show();
+
         }
+
         dbHandler.close();
     }
 }
