@@ -21,7 +21,6 @@
         <activity android:name=".ChatActivity" android:noHistory="true" android:windowSoftInputMode="stateHidden" />
         <activity android:name=".MyCalendarActivity" android:noHistory="true" />
         <activity android:name=".AddContactActivity" android:noHistory="true" />
-        </activity>
     </application>
 
 </manifest>
