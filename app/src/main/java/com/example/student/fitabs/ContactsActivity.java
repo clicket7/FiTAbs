@@ -6,8 +6,10 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,5 +66,15 @@ public class ContactsActivity extends AppCompatActivity {
 
     public void readFromDatabase() {
     // function for reading table with all contacts
+    }
+
+    public void addContact(View view) {
+        Toast toast = Toast.makeText(getApplicationContext(), "It's not finished yet!", Toast.LENGTH_LONG);
+        toast.show();
+    }
+
+    public void deleteContact(View view) {
+        Toast toast = Toast.makeText(getApplicationContext(), "It's not finished yet!", Toast.LENGTH_LONG);
+        toast.show();
     }
 }
