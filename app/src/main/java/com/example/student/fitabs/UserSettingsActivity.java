@@ -24,6 +24,7 @@ public class UserSettingsActivity extends AppCompatActivity {
     EditText editUsername, editNumber;
     CheckBox checkStatus;
     DBHandler dbHandler;
+    Integer activeId;
     ArrayList<Integer> id = new ArrayList<>();
     ArrayList<String> names = new ArrayList<>();
     ArrayList<String> telNumber = new ArrayList<>();
@@ -102,6 +103,7 @@ public class UserSettingsActivity extends AppCompatActivity {
         });
     }
 
+    //saves user's entered info
     public void saveUser(View view) {
         //gives error message is user didn't fill in all fields
         if (editUsername.getText().toString().equals("") || editNumber.getText().toString().equals("") ) {
