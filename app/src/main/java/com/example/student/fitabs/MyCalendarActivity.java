@@ -21,8 +21,6 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.student.fitabs.R;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -52,10 +50,12 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
     private static final String dateTemplate = "MMMM yyyy";
 
     /** Called when the activity is first created. */
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.my_calendar_view);
+
 
         _calendar = Calendar.getInstance(Locale.getDefault());
         month = _calendar.get(Calendar.MONTH) + 1;
@@ -138,6 +138,9 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
         adapter.notifyDataSetChanged();
         calendarView.setAdapter(adapter);
     }
+
+
+
 
     @Override
     public void onClick(View v) {
@@ -433,6 +436,15 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
             }
         }
 
+        public void onTouch(View view) {
+
+            try {
+                SingleViewCalendar();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
         public int getCurrentDayOfMonth() {
             return currentDayOfMonth;
         }
@@ -448,5 +460,25 @@ public class MyCalendarActivity extends Activity implements OnClickListener {
         public int getCurrentWeekDay() {
             return currentWeekDay;
         }
+    }
+    public void SingleViewCalendar(){
+        setContentView(R.layout.my_calendar_single_view);
+
+        TextView yLabel = (TextView)findViewById(R.id.yLabel);
+        TextView mLabel = (TextView)findViewById(R.id.mLabel);
+        TextView dLabel = (TextView)findViewById(R.id.dLabel);
+        TextView eLabel = (TextView)findViewById(R.id.eLabel);
+
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MMMM/d/E", Locale.US); // Set your locale!
+        String strDate = sdf.format(cal.getTime());
+
+        String[] values = strDate.split("/",0);
+
+        yLabel.setText(values[0]);
+        mLabel.setText(values[1]);
+        dLabel.setText(values[2]);
+        eLabel.setText(values[3]);
     }
 }
