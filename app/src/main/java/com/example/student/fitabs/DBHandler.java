@@ -202,18 +202,16 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // DELETE: Deleting a user
-    public void deleteUser(User user) {
+    public void deleteUser() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_USER, KEY_ID + " = ?",
-                new String[]{String.valueOf(user.getId())});
+        db.delete(TABLE_USER, null, null);
         db.close();
     }
 
     // DELETE: Deleting a cotact
-    public void deleteContact(User user) {
+    public void deleteContact() {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
-                new String[]{String.valueOf(user.getId())});
+        db.delete(TABLE_USER, null, null);
         db.close();
     }
 }

@@ -120,6 +120,7 @@ public class UserSettingsActivity extends AppCompatActivity {
         }
         //creates user with entered info
         else {
+            dbHandler.deleteUser();
             user.setName(editUsername.getText().toString());
             user.setTelnumber(editNumber.getText().toString());
             user.setStatus(checkStatus.isChecked());
