@@ -21,10 +21,6 @@ import java.util.List;
  */
 
 public class ChatActivity extends AppCompatActivity {
-    private String msg;
-    private List<ChatMessage> chatMessages;
-    private ListView chatWindow;
-    private EditText msgField;
     private ArrayList<String> chatMessages = new ArrayList<>();
     ListView chatWindow;
     EditText editMessage;
@@ -33,9 +29,6 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        chatMessages = new ArrayList<ChatMessage>();
-        chatWindow = (ListView) findViewById(R.id.chat);
-        msgField = (EditText) findViewById(R.id.editText);
         setContentView(R.layout.activity_chat); // initialization of variables and creating activity view
         editMessage = (EditText) findViewById(R.id.editMessage);
         chatWindow = (ListView) findViewById(R.id.chat);
@@ -79,11 +72,6 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    public void sendMsg() {
-        msg = msgField.getText().toString();
-        ChatMessage message = new ChatMessage("Kirils", msg); // creating message object
-        chatMessages.add(message); // adding message to List of ChatMessage
-        ArrayAdapter<ChatMessage> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
     public void sendMsg(View view) {
         String msg = editMessage.getText().toString();
         message.setAuthor("User");
