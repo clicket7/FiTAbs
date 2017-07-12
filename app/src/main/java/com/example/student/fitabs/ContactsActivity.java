@@ -77,4 +77,5 @@ public class ContactsActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(getApplicationContext(), "It's not finished yet!", Toast.LENGTH_LONG);
         toast.show();
     }
+
 }
