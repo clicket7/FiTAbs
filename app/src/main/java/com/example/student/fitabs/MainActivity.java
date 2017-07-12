@@ -11,7 +11,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        //Changed layout to contacts as first opened item
+        setContentView(R.layout.activity_contacts);
 
         //Define bottom navigation view (thats why design library in gradle was imported)
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById (R.id.bottom_navigation);
@@ -26,32 +28,22 @@ public class MainActivity extends AppCompatActivity {
                 {
                     //Contacts
                     case R.id.action_contacts:
-                        //Toast.makeText(MainActivity.this, "Contacts", Toast.LENGTH_SHORT).show();
-
-
+                        startActivity(new Intent(MainActivity.this, ContactsActivity.class));
                         break;
 
                     //Chat
                     case R.id.action_chat:
                         startActivity(new Intent(MainActivity.this, ChatActivity.class));
-                        //Toast.makeText(MainActivity.this, "Chat", Toast.LENGTH_SHORT).show();
-
-
                         break;
 
                     //Calendar
                     case R.id.action_calendar:
                         startActivity(new Intent(MainActivity.this, MyCalendarActivity.class));
-                        //Toast.makeText(MainActivity.this, "Calendar", Toast.LENGTH_SHORT).show();
-
-
                         break;
 
                     //Settings
                     case R.id.action_settings:
-                        //Toast.makeText(MainActivity.this, "Settings", Toast.LENGTH_SHORT).show();
-
-
+                        startActivity(new Intent(MainActivity.this, UserSettingsActivity.class));
                         break;
                 }
                 return true;
