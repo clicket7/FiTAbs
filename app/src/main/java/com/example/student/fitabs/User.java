@@ -11,8 +11,8 @@ public class User {
     private boolean isCoach;
 
     public User() {
-        this.name = "New user";
-        this.telnumber = "No number";
+        this.name = "";
+        this.telnumber = "";
         this.isCoach = false;
     }
 
