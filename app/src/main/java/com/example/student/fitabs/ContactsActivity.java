@@ -70,8 +70,8 @@ public class ContactsActivity extends AppCompatActivity {
     }
 
     public void addContact(View view) {
-        Toast toast = Toast.makeText(getApplicationContext(), "It's not finished yet!", Toast.LENGTH_LONG);
-        toast.show();
+        Intent intent = new Intent(ContactsActivity.this, AddContactActivity.class);
+        startActivity(intent);
     }
 
     public void deleteContact(View view) {
