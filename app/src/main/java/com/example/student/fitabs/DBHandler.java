@@ -99,11 +99,11 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // READ: Getting one contact
-    public User getContact(int id) {
+    public User getContact(String telNumber) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_CONTACTS, new String[]{KEY_C_ID,
-                        KEY_C_USERNAME, KEY_C_TEL_NUMBER, KEY_C_IS_TRENER}, KEY_ID + "=?",
-                new String[]{String.valueOf(id)}, null, null, null, null);
+                        KEY_C_USERNAME, KEY_C_TEL_NUMBER, KEY_C_IS_TRENER}, KEY_C_TEL_NUMBER + "=?",
+                new String[]{String.valueOf(telNumber)}, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
         User contact = new User(cursor.getString(1), cursor.getString(2), cursor.getInt(3) > 0);
