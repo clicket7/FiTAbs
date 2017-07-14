@@ -9,6 +9,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,17 +17,14 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.id;
-import static com.example.student.fitabs.R.id.editUsername;
-
 public class ContactsActivity extends AppCompatActivity {
 
     private ArrayList<User> contacts;
     DBHandler dbHandler;
     ArrayList<Integer> id;
-    ArrayList<String> usernames = new ArrayList<>();
-    ArrayList<String> telNumber = new ArrayList<>();
-    ArrayList<Boolean> isTrener = new ArrayList<>();
+
+
+
 
 
     @Override
@@ -122,5 +120,4 @@ public class ContactsActivity extends AppCompatActivity {
         Toast toast = Toast.makeText(getApplicationContext(), "It's not finished yet!", Toast.LENGTH_LONG);
         toast.show();
     }
-
 }
