@@ -45,6 +45,8 @@ public class UserSettingsActivity extends AppCompatActivity {
         editNumber.setText(user.getTelnumber());
         checkStatus.setChecked(user.getStatus());
 
+
+        //whole block loads previously entered data from database table TABLE_USER
         SQLiteDatabase database = dbHandler.getReadableDatabase();
         Cursor cursor = database.query(DBHandler.TABLE_USER,
                 null, null, null, null, null, null);
