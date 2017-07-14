@@ -12,7 +12,13 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
 
 
@@ -21,12 +27,12 @@ import java.util.ArrayList;
  */
 
 public class ChatActivity extends AppCompatActivity {
-    private ArrayList<String> chatMessages = new ArrayList<>();
+    public ArrayList<String> chatMessages = new ArrayList<>();
     ListView chatWindow;
     EditText editMessage;
     ChatMessage message = new ChatMessage();
     static int port = 9999;
-    String host = "192.168.8.121";
+    String host = "192.168.8.117";
     ChatClient cc = new ChatClient(host, port);
     Thread t;
 
@@ -76,24 +82,87 @@ public class ChatActivity extends AppCompatActivity {
 
         t = new Thread(cc);
         t.start();
-    }
 
+    }
 
     public void sendMsg(View view) {
         String msg = editMessage.getText().toString();
         message.setAuthor("User");
         message.setMsg(msg);
         chatMessages.add(message.getAuthor() + ": " + message.getMsg()); // adding message to List of ChatMessage
-
-   /*     ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
         // creating adapter for adding all messages to chat window
-        chatWindow.setAdapter(adapter); // adding messages to chat window through adapter */
+        chatWindow.setAdapter(adapter); // adding messages to chat window through adapter
         editMessage.setText("");
+        cc.sendServer(message.getMsg());
+    }
 
-   //     t = new Thread(cc);
-   //     t.start();
-        cc.sendServer(message.getAuthor() + ": " + message.getMsg());
+    public class ChatClient implements Runnable {
+        Socket socket;
+        int port;
+        String host;
+        BufferedReader in;
+        PrintWriter out;
 
+        public ChatClient(String host, int port) {
+            this.host = host;
+            this.port = port;
+        }
+
+        @Override
+        public void run() {
+            try {
+                socket = new Socket(host, port);
+                Log.e("Socket", "CONNECTED");
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+
+                getServer();
+                disconnet();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void sendServer(String msg) {
+            if (socket != null) {
+                out.print(msg);
+                Log.e("O", msg);
+            }
+        }
+
+        public String getServer() {
+            String msg = "";
+            while (true) {
+                try {
+                    String line;
+                    if ((line = in.readLine()) != null) {
+                        Log.e("I", line);
+                        msg += line;
+                    } else {
+                        return msg;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        public void disconnet() {
+            try {
+                in.close();
+                out.close();
+                socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
