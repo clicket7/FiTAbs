@@ -62,6 +62,18 @@ public class ContactsActivity extends AppCompatActivity {
                 return true;
             }
         });
+        // Create an {@link ContactsAdapter}, whose data source is a list of {@link User}s. The
+        // adapter knows how to create list items for each item in the list.
+       ContactsAdapter adapter = new ContactsAdapter(this, contacts);
+
+        // Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
+        // There should be a {@link ListView} with the view ID called list, which is declared in the
+        // activity_contacts.xml layout file.
+        ListView listView = (ListView) findViewById(R.id.contacts);
+
+        // Make the {@link ListView} use the {@link WordAdapter} we created above, so that the
+        // {@link ListView} will display list items for each {@link Word} in the list.
+        listView.setAdapter(adapter);
     }
 
     public void readFromDatabase() {
