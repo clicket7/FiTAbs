@@ -24,13 +24,11 @@ public class AddContactActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        dbHandler = new DBHandler(this);
-
         setContentView(R.layout.activity_add_contact);
     }
 
     public void saveContact(View view) {
+        dbHandler = new DBHandler(this);
         username = (EditText) findViewById (R.id.createUsername);
         telNumber = (EditText) findViewById (R.id.createTelnum);
 
