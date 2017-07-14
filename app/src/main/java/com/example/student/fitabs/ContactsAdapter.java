@@ -13,13 +13,13 @@ import java.util.ArrayList;
  * Created by Sandra Bogusa on 17.14.7.
  */
 
-public class ContactsAdapter  extends ArrayAdapter<User> {
+public class ContactsAdapter extends ArrayAdapter<User> {
 
     /**
      * Create a new {@link ContactsAdapter} object.
      *
      * @param context is the current context (i.e. Activity) that the adapter is being created in.
-     * @param users is the list of contacts to be displayed.
+     * @param users   is the list of contacts to be displayed.
      */
     public ContactsAdapter(Context context, ArrayList<User> users) {
         super(context, 0, users);
