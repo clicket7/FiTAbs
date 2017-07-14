@@ -1,6 +1,7 @@
 package com.example.student.fitabs;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,12 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -33,8 +30,7 @@ public class ChatActivity extends AppCompatActivity {
     ChatMessage message = new ChatMessage();
     static int port = 9999;
     String host = "192.168.8.117";
-    ChatClient cc = new ChatClient(host, port);
-    Thread t;
+    Client client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +76,7 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        t = new Thread(cc);
-        t.start();
+
 
     }
 
@@ -91,78 +86,33 @@ public class ChatActivity extends AppCompatActivity {
         message.setMsg(msg);
         chatMessages.add(message.getAuthor() + ": " + message.getMsg()); // adding message to List of ChatMessage
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
-        // creating adapter for adding all messages to chat window
         chatWindow.setAdapter(adapter); // adding messages to chat window through adapter
         editMessage.setText("");
-        cc.sendServer(message.getMsg());
+        client = new Client();
+        client.execute(host, msg);
+        Log.e("O", "send");
+
     }
 
-    public class ChatClient implements Runnable {
-        Socket socket;
-        int port;
-        String host;
-        BufferedReader in;
-        PrintWriter out;
-
-        public ChatClient(String host, int port) {
-            this.host = host;
-            this.port = port;
-        }
+    public class Client extends AsyncTask<String, Void, Long> {
 
         @Override
-        public void run() {
+        protected Long doInBackground(String... params) {
+            String ip = params[0];
+            String data = params[1];
+            Socket socket = null;
             try {
-                socket = new Socket(host, port);
-                Log.e("Socket", "CONNECTED");
-                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);
+                socket = new Socket(ip, 9999);
 
-                getServer();
-                disconnet();
+                OutputStream out = socket.getOutputStream();
+                out.write(data.getBytes());
 
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
                 socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
 
-        public void sendServer(String msg) {
-            if (socket != null) {
-                out.print(msg);
-                Log.e("O", msg);
-            }
-        }
-
-        public String getServer() {
-            String msg = "";
-            while (true) {
-                try {
-                    String line;
-                    if ((line = in.readLine()) != null) {
-                        Log.e("I", line);
-                        msg += line;
-                    } else {
-                        return msg;
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        public void disconnet() {
-            try {
-                in.close();
-                out.close();
-                socket.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            return new Long(1);
         }
     }
-
 }
