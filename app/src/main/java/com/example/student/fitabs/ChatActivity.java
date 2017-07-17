@@ -1,6 +1,8 @@
 package com.example.student.fitabs;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -11,9 +13,15 @@ import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.attr.name;
+import static com.example.student.fitabs.ContactsActivity.selectedContactName;
+import static com.example.student.fitabs.R.id.contact;
 
 
 /**
@@ -24,7 +32,13 @@ public class ChatActivity extends AppCompatActivity {
     private ArrayList<String> chatMessages = new ArrayList<>();
     ListView chatWindow;
     EditText editMessage;
+    TextView contactName;
     ChatMessage message = new ChatMessage();
+    User user = new User();
+    DBHandler dbHandler;
+    ArrayList<String> usernames = new ArrayList<>();
+    String userName = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +46,23 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat); // initialization of variables and creating activity view
         editMessage = (EditText) findViewById(R.id.editMessage);
         chatWindow = (ListView) findViewById(R.id.chat);
+        contactName = (TextView) findViewById(contact);
+        contactName.setText(selectedContactName);
+
+        dbHandler = new DBHandler(this);
+
+        SQLiteDatabase database = dbHandler.getReadableDatabase();
+        Cursor cursor = database.query(DBHandler.TABLE_USER,
+                null, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            int usernameIndex = cursor.getColumnIndex(dbHandler.KEY_USERNAME);
+            userName = cursor.getString(usernameIndex);
+        }else{
+            Toast toast = Toast.makeText(getApplicationContext(), "Table is empty", Toast.LENGTH_LONG);
+            toast.show();
+        }
+        user.setName(userName);
+
 
 
         //Define bottom navigation view (thats why design library in gradle was imported)
@@ -74,7 +105,7 @@ public class ChatActivity extends AppCompatActivity {
 
     public void sendMsg(View view) {
         String msg = editMessage.getText().toString();
-        message.setAuthor("User");
+        message.setAuthor(user.getName());
         message.setMsg(msg);
         chatMessages.add(message.getAuthor() + ": " + message.getMsg()); // adding message to List of ChatMessage
 
