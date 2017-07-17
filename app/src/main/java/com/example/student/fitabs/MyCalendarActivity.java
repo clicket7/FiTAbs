@@ -1,29 +1,20 @@
 package com.example.student.fitabs;
 
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.text.format.DateFormat;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
-import android.widget.GridView;
-import java.util.ArrayList;
-import java.util.Calendar;
 
-@TargetApi(3)
+import com.example.student.fitabs.Day;
+import com.example.student.fitabs.R;
+
+import java.util.ArrayList;
+
 public class MyCalendarActivity extends AppCompatActivity implements View.OnClickListener{
-    private static final String tag = "MyCalendarActivity";
-    private GridView calendarView;
-    private Calendar _calendar;
     CalendarView _Calendar = null;
     Button _ButtonSave = null;
     EditText _EditText = null;
@@ -36,48 +27,6 @@ public class MyCalendarActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        calendarView = (GridView) this.findViewById(R.id.calendar);
-
-
-        //Define bottom navigation view (thats why design library in gradle was imported)
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-
-        //Display right icon
-        bottomNavigationView.getMenu().getItem(2).setChecked(true);
-
-        //Define Bottom navigation view listener
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-            //Selected icon(item) - changes to the appropriate view
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    //Contacts
-                    case R.id.action_contacts:
-                        startActivity(new Intent(MyCalendarActivity.this, ContactsActivity.class));
-                        break;
-
-                    //Chat
-                    case R.id.action_chat:
-                        startActivity(new Intent(MyCalendarActivity.this, ChatActivity.class));
-                        break;
-
-                    //Calendar
-                    case R.id.action_calendar:
-                        break;
-
-                    //Settings
-                    case R.id.action_settings:
-                        startActivity(new Intent(MyCalendarActivity.this, UserSettingsActivity.class));
-                        break;
-                }
-                return true;
-            }
-        });
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         //Load previous entries
         FileHandler fh = new FileHandler();
         _Schedule = fh.deserializeObject();
@@ -87,6 +36,8 @@ public class MyCalendarActivity extends AppCompatActivity implements View.OnClic
         _ButtonSave = (Button) this.findViewById(R.id.button8);
         _EditText = (EditText) this.findViewById(R.id.editText);
 
+        //TODO update _SelectedDay so app doesn't crash if a choice is made before changing
+        //the date
 
         //Set up button
         _ButtonSave.setText(R.string.btn_edit);
@@ -252,6 +203,5 @@ public class MyCalendarActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
+//
 }
-
-
