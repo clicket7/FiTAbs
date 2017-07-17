@@ -49,6 +49,10 @@ public class MyCalendarActivity extends AppCompatActivity implements View.OnClic
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 selectedDateChanged(view, year, month, dayOfMonth);
             }
+
+
+
+
         });
 
     }
