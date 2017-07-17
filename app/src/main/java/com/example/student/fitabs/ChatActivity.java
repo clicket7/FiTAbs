@@ -9,11 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -24,13 +25,15 @@ import java.util.ArrayList;
  */
 
 public class ChatActivity extends AppCompatActivity {
-    public ArrayList<String> chatMessages = new ArrayList<>();
-    ListView chatWindow;
-    EditText editMessage;
-    ChatMessage message = new ChatMessage();
-    static int port = 9999;
-    String host = "192.168.8.117";
-    Client client;
+    public ArrayList<String> chatMessages;
+    private ListView chatWindow;
+    private EditText editMessage;
+    private Client client;
+    public static ChatClient chatClient;
+    private ClientListAdapter mAdapter;
+
+    private static int port = 9999;
+    private String host = "192.168.8.117";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,9 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat); // initialization of variables and creating activity view
         editMessage = (EditText) findViewById(R.id.editMessage);
         chatWindow = (ListView) findViewById(R.id.chat);
+        chatMessages = new ArrayList<String>();
+        mAdapter = new ClientListAdapter(this, chatMessages);
+        chatWindow.setAdapter(mAdapter);
 
 
         //Define bottom navigation view (thats why design library in gradle was imported)
@@ -76,21 +82,18 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-
-
+        chatClient = new ChatClient(host, 9999);
+        new Thread(chatClient).start();
+        mAdapter.notifyDataSetChanged();
+        client = new Client();
+        client.execute(host, "Android user is online");
     }
 
     public void sendMsg(View view) {
         String msg = editMessage.getText().toString();
-        message.setAuthor("User");
-        message.setMsg(msg);
-        chatMessages.add(message.getAuthor() + ": " + message.getMsg()); // adding message to List of ChatMessage
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, chatMessages);
-        chatWindow.setAdapter(adapter); // adding messages to chat window through adapter
-        editMessage.setText("");
         client = new Client();
-        client.execute(host, msg);
-        Log.e("O", "send");
+        client.execute(host, "Android user:" + msg);
+        editMessage.setText("");
 
     }
 
@@ -101,18 +104,56 @@ public class ChatActivity extends AppCompatActivity {
             String ip = params[0];
             String data = params[1];
             Socket socket = null;
+            OutputStream out = null;
             try {
                 socket = new Socket(ip, 9999);
-
-                OutputStream out = socket.getOutputStream();
+                out = socket.getOutputStream();
                 out.write(data.getBytes());
-
                 socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             return new Long(1);
         }
+    }
+
+    public class ChatClient implements Runnable {
+        private Socket client;
+        BufferedReader in;
+        private String serverIp;
+        private int serverPort;
+
+        public ChatClient(String host, int port) {
+            serverIp = host;
+            serverPort = port;
+        }
+
+        @Override
+        public void run() {
+            try {
+                client = new Socket(serverIp, serverPort);
+                in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+
+                String msg;
+                while (true) {
+                    try {
+                        msg = in.readLine();
+                        chatMessages.add(msg);
+                        Log.e("I", msg);
+                        if (msg.equals("exit")) {
+                            in.close();
+                            client.close();
+                            break;
+                        }
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 }
