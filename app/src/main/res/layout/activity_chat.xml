@@ -13,7 +13,6 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:fontFamily="serif"
-        android:text="Contact"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
     <ListView
