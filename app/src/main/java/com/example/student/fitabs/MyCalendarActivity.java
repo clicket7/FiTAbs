@@ -54,9 +54,7 @@ public class MyCalendarActivity extends AppCompatActivity implements View.OnClic
             }
 
         });
-/*
 
-        setContentView(R.layout.activity_main);
         //Define bottom navigation view (thats why design library in gradle was imported)
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById (R.id.bottom_navigation);
 
@@ -93,7 +91,7 @@ public class MyCalendarActivity extends AppCompatActivity implements View.OnClic
                 return true;
             }
         });
-*/
+
 
     }
 
