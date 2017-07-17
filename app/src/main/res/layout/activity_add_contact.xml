@@ -15,8 +15,8 @@
         android:textColor="#FFFFFF"
         android:background="#CEA58F"
         app:layout_constraintRight_toLeftOf="@+id/saveContact"
-        android:layout_marginRight="52dp"
-        android:layout_marginEnd="52dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginLeft="16dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/saveContact"
         tools:layout_constraintBaseline_creator="1" />
 
@@ -109,6 +109,7 @@
         android:hint="Phone number"
         android:ems="10"
         android:inputType="numberDecimal"
+        android:maxLength="8"
         android:text=""
         app:layout_constraintLeft_toRightOf="@+id/textTelnumber"
         tools:layout_constraintTop_creator="1"
