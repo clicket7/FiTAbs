@@ -24,16 +24,21 @@ import java.util.ArrayList;
  * Created by student on 17.11.7.
  */
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity implements Runnable {
     public ArrayList<String> chatMessages;
     private ListView chatWindow;
     private EditText editMessage;
     private Client client;
-    public static ChatClient chatClient;
     private ClientListAdapter mAdapter;
 
     private static int port = 9999;
     private String host = "192.168.8.117";
+    private Socket socket;
+    private BufferedReader in;
+    Thread t;
+
+    DBHandler dbHandler;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,7 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chat); // initialization of variables and creating activity view
         editMessage = (EditText) findViewById(R.id.editMessage);
         chatWindow = (ListView) findViewById(R.id.chat);
+
         chatMessages = new ArrayList<String>();
         mAdapter = new ClientListAdapter(this, chatMessages);
         chatWindow.setAdapter(mAdapter);
@@ -82,19 +88,48 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        chatClient = new ChatClient(host, 9999);
-        new Thread(chatClient).start();
-        mAdapter.notifyDataSetChanged();
+        dbHandler = new DBHandler(this);
+        user = dbHandler.getUser(1);
+
         client = new Client();
-        client.execute(host, "Android user is online");
+        client.execute(host, user.getName() + " is online");
+
+        t = new Thread(this);
+        t.start();
+        mAdapter.notifyDataSetChanged();
+
+        dbHandler.close();
     }
 
     public void sendMsg(View view) {
-        String msg = editMessage.getText().toString();
-        client = new Client();
-        client.execute(host, "Android user:" + msg);
-        editMessage.setText("");
+        dbHandler = new DBHandler(this);
+        user = dbHandler.getUser(1);
 
+        String msg = editMessage.getText().toString();
+
+        client = new Client();
+        client.execute(host, user.getName() + ": " + msg);
+
+        editMessage.setText("");
+        dbHandler.close();
+
+    }
+
+    @Override
+    public void run() {
+        try {
+            socket = new Socket(host, port);
+            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            String msg;
+            while ((msg = in.readLine()) != null) {
+                Log.e("I", msg);
+                chatMessages.add(msg);
+            }
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public class Client extends AsyncTask<String, Void, Long> {
@@ -104,56 +139,16 @@ public class ChatActivity extends AppCompatActivity {
             String ip = params[0];
             String data = params[1];
             Socket socket = null;
-            OutputStream out = null;
             try {
                 socket = new Socket(ip, 9999);
-                out = socket.getOutputStream();
+                OutputStream out = socket.getOutputStream();
                 out.write(data.getBytes());
                 socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
             return new Long(1);
         }
-    }
-
-    public class ChatClient implements Runnable {
-        private Socket client;
-        BufferedReader in;
-        private String serverIp;
-        private int serverPort;
-
-        public ChatClient(String host, int port) {
-            serverIp = host;
-            serverPort = port;
-        }
-
-        @Override
-        public void run() {
-            try {
-                client = new Socket(serverIp, serverPort);
-                in = new BufferedReader(new InputStreamReader(client.getInputStream()));
-
-                String msg;
-                while (true) {
-                    try {
-                        msg = in.readLine();
-                        chatMessages.add(msg);
-                        Log.e("I", msg);
-                        if (msg.equals("exit")) {
-                            in.close();
-                            client.close();
-                            break;
-                        }
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
     }
 }
