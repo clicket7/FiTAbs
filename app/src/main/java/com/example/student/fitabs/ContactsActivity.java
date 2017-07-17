@@ -16,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import static android.R.attr.id;
+import static android.media.CamcorderProfile.get;
 import static com.example.student.fitabs.R.id.editUsername;
 public class ContactsActivity extends AppCompatActivity {
     private ArrayList<User> contacts;
@@ -23,7 +24,10 @@ public class ContactsActivity extends AppCompatActivity {
     ArrayList<Integer> id;
     ArrayList<String> usernames = new ArrayList<>();
     ArrayList<String> telNumber = new ArrayList<>();
+    ListView listContacts;
     ArrayList<Boolean> isTrener = new ArrayList<>();
+    static public String selectedContactName;
+    User selectedContact = new User();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,13 +76,19 @@ public class ContactsActivity extends AppCompatActivity {
         // {@link ListView} will display list items for each {@link Word} in the list.
         listView.setAdapter(adapter);
         //Selects view to set listener on it
-        ListView listContacts = (ListView) findViewById(R.id.contacts);
+        listContacts = (ListView) findViewById(R.id.contacts);
         // Set a click listener on that View
         listContacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             // The code in this method will be executed when the family category is clicked on.
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position,
                                     long arg3) {
+                //converts cicked item postion id from long to int
+                int i = (int) arg3;
+                //gets selectedContact object from contacts ArrayList by selectedID
+                selectedContact = contacts.get(i);
+                //initialize selectedContactName string as selectedContact name
+                selectedContactName = selectedContact.getName();
                 // Create a new intent to open the {@link FamilyActivity}
                 Intent chatIntent = new Intent(ContactsActivity.this, ChatActivity.class);
                 // Start the new activity
@@ -92,7 +102,6 @@ public class ContactsActivity extends AppCompatActivity {
         Cursor cursor = database.query(DBHandler.TABLE_CONTACTS,
                 null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
-            int idIndex = cursor.getColumnIndex(dbHandler.KEY_C_ID);
             int usernameIndex = cursor.getColumnIndex(dbHandler.KEY_C_USERNAME);
             int telNumberIndex = cursor.getColumnIndex(dbHandler.KEY_C_TEL_NUMBER);
             int statusIndex = cursor.getColumnIndex(dbHandler.KEY_C_IS_TRENER);
