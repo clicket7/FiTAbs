@@ -2,33 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <!--This xml file is necessary for ContactsAdapter to work.
     It describes designe of list items (contacts). -->
-
     <TextView
         android:id="@+id/contactsName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_below="@+id/textView" />
-
     <TextView
         android:id="@+id/contactsPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:layout_below="@+id/textView" />
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp" />
-
-   <!-- <TextView
-        android:id="@+id/contactsStatus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_below="@+id/textView" /> -->
-
+    <!-- <TextView
+         android:id="@+id/contactsStatus"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_weight="1"
+         android:layout_below="@+id/textView" /> -->
 </LinearLayout>
