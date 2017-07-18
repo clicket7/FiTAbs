@@ -9,6 +9,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.attr.type;
+import static android.R.id.message;
+
 /**
  * Created by Sandra Bogusha on 17.11.7.
  */
@@ -22,6 +25,9 @@ public class DBHandler extends SQLiteOpenHelper {
     // Contacts table name
     public static final String TABLE_USER = "User";
     public static final String TABLE_CONTACTS = "Contacts";
+    public static final String TABLE_CHAT_MESSAGE = "ChatMessage";
+    public static final String TABLE_EXERCISES = "Exercises";
+
     // USer Table Columns names
     public static final String KEY_ID = "ID";
     public static final String KEY_USERNAME = "Username";
@@ -33,6 +39,18 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String KEY_C_USERNAME = "Username";
     public static final String KEY_C_TEL_NUMBER = "TelephoneNumber";
     public static final String KEY_C_IS_TRENER = "IsTrener";
+
+    // ChatMessage Table Columns names
+    public static final String KEY_CM_ID = "ID";
+    public static final String KEY_CM_CONTACT_NUMBER = "ConcactTelephoneNumber";
+    public static final String KEY_CM_MSG = "Message";
+
+    // Exercises Table Columns names
+    public static final String KEY_EX_ID = "ID";
+    public static final String KEY_EX_TYPE = "ExerciseType";
+    public static final String KEY_EX_NAME = "ExerciseName";
+    public static final String KEY_EX_DESCRIPTION = "ExerciseDescription";
+    public static final String KEY_EX_IMAGE= "Image";
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -46,9 +64,19 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_USERS_TABLE);
 
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_USERNAME + " TEXT, "
-                + KEY_TEL_NUMBER + " TEXT, " + KEY_IS_TRENER + " TEXT" + ")";
+                + KEY_C_ID + " INTEGER PRIMARY KEY," + KEY_C_USERNAME + " TEXT, "
+                + KEY_C_TEL_NUMBER + " TEXT, " + KEY_C_IS_TRENER + " TEXT" + ")";
         db.execSQL(CREATE_CONTACTS_TABLE);
+
+        String CREATE_CHAT_MESSAGE_TABLE = "CREATE TABLE " + TABLE_CHAT_MESSAGE + "("
+                + KEY_CM_ID + " INTEGER PRIMARY KEY," + KEY_CM_CONTACT_NUMBER + " TEXT, "
+                + KEY_CM_MSG + " TEXT, " + ")";
+        db.execSQL(CREATE_CHAT_MESSAGE_TABLE);
+
+        String CREATE_EXERCISE_TABLE = "CREATE TABLE " + TABLE_EXERCISES + "("
+                + KEY_EX_ID + " INTEGER PRIMARY KEY," + KEY_EX_TYPE + " TEXT, "
+                + KEY_EX_NAME + " TEXT, " + KEY_EX_DESCRIPTION + " TEXT, " + KEY_EX_IMAGE + " TEXT, " + ")";
+        db.execSQL(CREATE_EXERCISE_TABLE);
     }
 
     @Override
@@ -56,6 +84,8 @@ public class DBHandler extends SQLiteOpenHelper {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CHAT_MESSAGE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXERCISES);
         // Creating tables again
         onCreate(db);
     }
@@ -83,6 +113,24 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_C_IS_TRENER, user.getStatus());
         // Inserting Row
         db.insert(TABLE_CONTACTS, null, values);
+        db.close(); // Closing database connection
+    }
+
+    //  INSERT : Adding new ChatMessages
+    public void addChatMessages(ArrayList<String> msg, String number) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int length = msg.size();
+        int i = 0;
+        while (i > length + 1) {
+            //map user values with table’s column using ContentValues object
+            ContentValues values = new ContentValues();
+            values.put(KEY_CM_CONTACT_NUMBER, number);
+            values.put(KEY_CM_MSG, msg.get(i).toString());
+            // Inserting Row
+            db.insert(TABLE_CHAT_MESSAGE, null, values);
+            i++;
+        }
         db.close(); // Closing database connection
     }
 
@@ -156,6 +204,50 @@ public class DBHandler extends SQLiteOpenHelper {
         return contactList;
     }
 
+    // READ: Getting All ChatMessages by telephoneNumber
+    public List<ChatMessage> getAllChatMessages(String number) {
+        List<ChatMessage> msgList = new ArrayList<>();
+        // Select All Query
+        String selectQuery = "SELECT * FROM " + TABLE_CHAT_MESSAGE + "WHERE telephoneNumber = ?" + number;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {ChatMessage message = new ChatMessage();
+                message.setId(Integer.parseInt(cursor.getString(0)));
+                message.setPhoneNumber(cursor.getString(1));
+                message.setMessage(cursor.getString(2));
+                // Adding contact to list
+                msgList.add(message);
+            } while (cursor.moveToNext());
+        }
+        // return contact list
+        return msgList;
+    }
+
+    // READ: Getting All Exercises by type
+    public List<Exercises> getExercisesByType(String type) {
+        List<Exercises> exerList = new ArrayList<>();
+        // Select All Query
+        String selectQuery = "SELECT * FROM " + TABLE_EXERCISES+ "WHERE exerciseType = ?" + type;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do { Exercises exer = new Exercises();
+                exer.setId(Integer.parseInt(cursor.getString(0)));
+                exer.setType(cursor.getString(1));
+                exer.setExName(cursor.getString(2));
+                exer.setDescription(cursor.getString(3));
+                exer.setImage(cursor.getString(4));
+                // Adding contact to list
+                exerList.add(exer);
+            } while (cursor.moveToNext());
+        }
+        // return contact list
+        return exerList;
+    }
+
     // To get total numbers of user records in database write getUsersCount
     public int getUserCount() {
         String countQuery = "SELECT * FROM " + TABLE_USER;
@@ -208,10 +300,17 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    // DELETE: Deleting a cotact
+    // DELETE: Deleting a cotact by contact name
     public void deleteContact(String contactName) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CONTACTS,  "username = ?", new String[] { contactName });
+        db.delete(TABLE_CONTACTS, "username = ?", new String[]{contactName});
+        db.close();
+    }
+
+    // DELETE: Deleting a ChatMessage by phoneNUmber
+    public void deleteChatMessages(String number) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_CONTACTS, "phoneNumber = ?", new String[]{number});
         db.close();
     }
 }
