@@ -21,7 +21,7 @@ public class FileHandler {
     //Constructor
     public FileHandler(){
         File sdCard = Environment.getExternalStorageDirectory();
-        File directory = new File(sdCard + "/kalendar");
+        File directory = new File(sdCard + "/fitabs");
         directory.mkdirs();
         File file =  new File(directory, "Schedule.ser");
         String path = file.getAbsolutePath();
