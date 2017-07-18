@@ -77,12 +77,11 @@ public class ContactsActivity extends AppCompatActivity {
         // Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
         // There should be a {@link ListView} with the view ID called list, which is declared in the
         // activity_contacts.xml layout file.
-        ListView listView = (ListView) findViewById(R.id.contacts);
+        listContacts = (ListView) findViewById(R.id.contacts);
         // Make the {@link ListView} use the {@link WordAdapter} we created above, so that the
         // {@link ListView} will display list items for each {@link Word} in the list.
-        listView.setAdapter(adapter);
+        listContacts.setAdapter(adapter);
         //Selects view to set listener on it
-        listContacts = (ListView) findViewById(R.id.contacts);
         // Set a click listener on that View
         listContacts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             // The code in this method will be executed when the family category is clicked on.
