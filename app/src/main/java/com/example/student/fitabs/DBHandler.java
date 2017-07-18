@@ -211,7 +211,7 @@ public class DBHandler extends SQLiteOpenHelper {
     // DELETE: Deleting a cotact
     public void deleteContact(String contactName) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_USER,  "username = ?", new String[] { contactName });
+        db.delete(TABLE_CONTACTS,  "username = ?", new String[] { contactName });
         db.close();
     }
 }
