@@ -36,7 +36,7 @@ public class GroupsOfExercisesActivity extends AppCompatActivity {
         dbHandler = new DBHandler(this);
         listView = (ListView) findViewById(R.id.exerciseList);
         groups = new ArrayList<>();
-
+        readFromDatabase();
         //Define bottom navigation view (thats why design library in gradle was imported)
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         //Display right icon
@@ -92,6 +92,21 @@ public class GroupsOfExercisesActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void readFromDatabase() {
+        SQLiteDatabase database = dbHandler.getReadableDatabase();
+        Cursor cursor = database.query(DBHandler.TABLE_CONTACTS,
+                null, null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+
+        } else {
+            Toast toast = Toast.makeText(getApplicationContext(), "Table is empty", Toast.LENGTH_LONG);
+            toast.show();
+        }
+
+        dbHandler.close();
     }
 
 }

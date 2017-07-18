@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import static com.example.student.fitabs.R.id.calendarView;
 
 public class MyCalendarActivity extends AppCompatActivity implements View.OnClickListener{
@@ -38,6 +40,8 @@ public class MyCalendarActivity extends AppCompatActivity implements View.OnClic
         _Calendar = (CalendarView) this.findViewById(calendarView);
         _ButtonSave = (Button) this.findViewById(R.id.button8);
         _EditText = (EditText) this.findViewById(R.id.editText);
+        _SelectedDay = new Day(Calendar.getInstance().get(Calendar.YEAR),
+                Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 
 
         //Set up button
