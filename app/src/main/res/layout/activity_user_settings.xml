@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.student.fitabs.UserSettingsActivity">
-
     <TextView
         android:id="@+id/textUsername"
         android:layout_width="wrap_content"
@@ -19,7 +18,6 @@
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
     <EditText
         android:id="@+id/editUsername"
         android:layout_width="0dp"
@@ -36,7 +34,6 @@
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/editTelNumber"
         app:layout_constraintTop_toTopOf="@+id/textView" />
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -46,7 +43,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textUsername"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/textUsername" />
-
     <TextView
         android:id="@+id/textTelnumber"
         android:layout_width="wrap_content"
@@ -60,7 +56,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent" />
-
     <EditText
         android:id="@+id/editTelNumber"
         android:layout_width="0dp"
@@ -74,7 +69,6 @@
         app:layout_constraintTop_toBottomOf="@+id/editUsername"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/checkBoxStatus" />
-
     <TextView
         android:id="@+id/textAboutNumber"
         android:layout_width="wrap_content"
@@ -84,7 +78,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textTelnumber"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/textTelnumber" />
-
     <TextView
         android:id="@+id/textStatus"
         android:layout_width="wrap_content"
@@ -98,7 +91,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textAboutNumber"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent" />
-
     <TextView
         android:id="@+id/textAboutStatus"
         android:layout_width="wrap_content"
@@ -108,7 +100,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textStatus"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/textStatus" />
-
     <CheckBox
         android:id="@+id/checkBoxStatus"
         android:layout_width="wrap_content"
@@ -120,7 +111,6 @@
         app:layout_constraintTop_toBottomOf="@+id/editTelNumber"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toRightOf="@+id/textAboutNumber" />
-
     <Button
         android:id="@+id/buttonSave"
         android:layout_width="100dp"
@@ -135,21 +125,22 @@
         app:layout_constraintTop_toBottomOf="@+id/textAboutStatus"
         android:textColor="#FFFFFF"
         android:background="#008000"/>
-
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
-        android:layout_width="576dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:background="@color/colorPrimary"
         app:itemBackground="@color/colorPrimary"
         app:itemIconTint="@drawable/nav_item_color_state"
         app:itemTextColor="@drawable/nav_item_color_state"
         app:menu="@menu/bottom_navigation_main"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_gravity="bottom"
         tools:layout_editor_absoluteX="8dp">
-
     </android.support.design.widget.BottomNavigationView>
-
 </android.support.constraint.ConstraintLayout>

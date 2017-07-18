@@ -72,9 +72,9 @@ public class MyCalendarActivity extends AppCompatActivity implements View.OnClic
                         startActivity(new Intent(MyCalendarActivity.this, ContactsActivity.class));
                         break;
 
-                    //Chat
-                    case R.id.action_chat:
-                        startActivity(new Intent(MyCalendarActivity.this, ChatActivity.class));
+                    //Exercise
+                    case R.id.action_exercise:
+                        startActivity(new Intent(MyCalendarActivity.this, GroupsOfExercisesActivity.class));
                         break;
 
                     //Calendar

@@ -76,8 +76,9 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
                         startActivity(new Intent(ChatActivity.this, ContactsActivity.class));
                         break;
 
-                    //Chat
-                    case R.id.action_chat:
+                    //Exercise
+                    case R.id.action_exercise:
+                        startActivity(new Intent(ChatActivity.this, GroupsOfExercisesActivity.class));
                         break;
 
                     //Calendar

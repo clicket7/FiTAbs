@@ -40,8 +40,8 @@ public class GroupsOfExercisesActivity extends AppCompatActivity {
                     case R.id.action_contacts:
                         startActivity(new Intent(GroupsOfExercisesActivity.this, ContactsActivity.class));
                         break;
-                    //Chat
-                    case R.id.action_chat:
+                    //Exercise
+                    case R.id.action_exercise:
                         break;
                     //Calendar
                     case R.id.action_calendar:

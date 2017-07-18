@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.student.fitabs.AddContactActivity">
-
     <Button
         android:id="@+id/cancelAdd"
         android:layout_width="150dp"
@@ -15,11 +14,10 @@
         android:textColor="#FFFFFF"
         android:background="#CEA58F"
         app:layout_constraintRight_toLeftOf="@+id/saveContact"
-        android:layout_marginEnd="30dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginRight="52dp"
+        android:layout_marginEnd="52dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/saveContact"
         tools:layout_constraintBaseline_creator="1" />
-
     <Button
         android:id="@+id/saveContact"
         android:layout_width="150dp"
@@ -35,7 +33,6 @@
         tools:layout_constraintTop_creator="1"
         android:layout_marginTop="188dp"
         app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/textContactUsername"
         android:layout_width="wrap_content"
@@ -50,7 +47,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="16dp" />
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
@@ -59,7 +55,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textContactUsername"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/textContactUsername" />
-
     <TextView
         android:id="@+id/textTelnumber"
         android:layout_width="wrap_content"
@@ -74,7 +69,6 @@
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="16dp" />
-
     <TextView
         android:id="@+id/textAboutNumber"
         android:layout_width="wrap_content"
@@ -84,7 +78,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textTelnumber"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="@+id/textTelnumber" />
-
     <EditText
         android:id="@+id/createUsername"
         android:layout_width="wrap_content"
@@ -100,7 +93,6 @@
         app:layout_constraintBottom_toTopOf="@+id/textView"
         android:layout_marginStart="55dp"
         app:layout_constraintTop_toTopOf="@+id/textView" />
-
     <EditText
         android:id="@+id/createTelnum"
         android:layout_width="wrap_content"
@@ -116,6 +108,4 @@
         android:layout_marginStart="72dp"
         android:layout_marginTop="25dp"
         app:layout_constraintTop_toBottomOf="@+id/createUsername" />
-
-
 </android.support.constraint.ConstraintLayout>

@@ -1,33 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_contacts"
         android:title="Contacts"
         android:enabled="true"
         android:icon="@drawable/ic_contacts"
         app:showAsAction="ifRoom"></item>
-
     <item
-        android:id="@+id/action_chat"
-        android:title="Chat"
+        android:id="@+id/action_exercise"
+        android:title="Exercises"
         android:enabled="true"
-        android:icon="@drawable/ic_chat"
+        android:icon="@drawable/ic_exercise"
         app:showAsAction="ifRoom"></item>
-
     <item
         android:id="@+id/action_calendar"
         android:title="Calendar"
         android:enabled="true"
         android:icon="@drawable/ic_calendar"
         app:showAsAction="ifRoom"></item>
-
     <item
         android:id="@+id/action_settings"
         android:title="Settings"
         android:enabled="true"
         android:icon="@drawable/ic_settings"
         app:showAsAction="ifRoom"></item>
-
 </menu>

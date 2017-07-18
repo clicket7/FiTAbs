@@ -94,9 +94,9 @@ public class UserSettingsActivity extends AppCompatActivity {
                         startActivity(new Intent(UserSettingsActivity.this, ContactsActivity.class));
                         break;
 
-                    //Chat
-                    case R.id.action_chat:
-                        startActivity(new Intent(UserSettingsActivity.this, ChatActivity.class));
+                    //Exercise
+                    case R.id.action_exercise:
+                        startActivity(new Intent(UserSettingsActivity.this, GroupsOfExercisesActivity.class));
                         break;
 
                     //Calendar
@@ -140,6 +140,8 @@ public class UserSettingsActivity extends AppCompatActivity {
 
             Toast toast = Toast.makeText (getApplicationContext(), getString(R.string.saveSucc), Toast.LENGTH_LONG);
             toast.show();
+
+            startActivity(new Intent(UserSettingsActivity.this, ContactsActivity.class));
 
         }
 

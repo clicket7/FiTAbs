@@ -54,9 +54,9 @@ public class ContactsActivity extends AppCompatActivity {
                     //Contacts
                     case R.id.action_contacts:
                         break;
-                    //Chat
-                    case R.id.action_chat:
-                        startActivity(new Intent(ContactsActivity.this, ChatActivity.class));
+                    //Exercise
+                    case R.id.action_exercise:
+                        startActivity(new Intent(ContactsActivity.this, GroupsOfExercisesActivity.class));
                         break;
                     //Calendar
                     case R.id.action_calendar:

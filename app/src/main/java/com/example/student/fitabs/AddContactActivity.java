@@ -72,6 +72,8 @@ public class AddContactActivity extends AppCompatActivity {
 
                 Toast toast = Toast.makeText (getApplicationContext(), getString(R.string.saveSucc), Toast.LENGTH_LONG);
                 toast.show();
+
+                startActivity(new Intent(AddContactActivity.this, ContactsActivity.class));
             }
 
             username.setText("");

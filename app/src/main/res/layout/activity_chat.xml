@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     android:weightSum="1">
-
     <TextView
         android:id="@+id/contact"
         android:layout_width="wrap_content"
@@ -14,29 +14,26 @@
         android:layout_gravity="center_horizontal"
         android:fontFamily="serif"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
-
     <ListView
         android:id="@+id/chat"
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_weight="0.72"
         android:layout_below="@+id/contact"
-        android:stackFromBottom="true"
-        android:transcriptMode="alwaysScroll"
-        android:layout_alignParentStart="true" />
-
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/editMessage"/>
     <EditText
         android:id="@+id/editMessage"
         android:layout_width="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:layout_weight="1"
         android:ems="10"
         android:inputType="textPersonName"
         android:layout_above="@+id/bottom_navigation"
-        android:layout_centerHorizontal="true" />
-
+        android:layout_centerHorizontal="true"
+        android:layout_toLeftOf="@+id/send"/>
     <Button
         android:id="@+id/send"
         android:layout_width="@dimen/button_size_width"
@@ -45,13 +42,12 @@
         android:layout_below="@+id/editMessage"
         android:layout_above="@+id/bottom_navigation"
         android:layout_marginTop="-50dp"
-        android:layout_toStartOf="@+id/editMessage"
+        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:onClick="sendMsg"
         android:text="@string/send"
         android:textColor="#FFFFFF"
         android:background="#008000" />
-
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
@@ -64,5 +60,4 @@
         app:itemTextColor="@android:color/white"
         app:menu="@menu/bottom_navigation_main">
     </android.support.design.widget.BottomNavigationView>
-
 </RelativeLayout>
