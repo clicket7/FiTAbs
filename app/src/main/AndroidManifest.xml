@@ -23,6 +23,9 @@
         <activity android:name=".ChatActivity" android:noHistory="true" android:windowSoftInputMode="stateHidden" />
         <activity android:name=".MyCalendarActivity" android:noHistory="true" />
         <activity android:name=".AddContactActivity" android:noHistory="true" />
+        <activity android:name=".GroupsOfExercisesActivity" android:noHistory="true" />
+        <activity android:name=".ExercisesActivity" android:noHistory="true" />
+        <activity android:name=".ExerciseActivity" android:noHistory="true" />
     </application>
 
 </manifest>
