@@ -1,13 +1,20 @@
 package com.example.student.fitabs;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.sip.SipAudioCall;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +23,7 @@ import java.util.List;
 
 public class GroupsOfExercisesActivity extends AppCompatActivity {
     private ListView listView;
-    private List<String> groups;
+    private ArrayList<String> groups;
     private DBHandler dbHandler;
     static public String selectedOption;
 
@@ -53,6 +60,31 @@ public class GroupsOfExercisesActivity extends AppCompatActivity {
                         break;
                 }
                 return true;
+            }
+        });
+
+        StringAdapter adapter = new StringAdapter(this, groups);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View v, int position, long arg3) {
+                SQLiteDatabase database = dbHandler.getReadableDatabase();
+                Cursor cursor = database.query(DBHandler.TABLE_USER,
+                        null, null, null, null, null, null);
+
+                if (cursor.moveToFirst()) {
+                    //converts cicked item postion id from long to int
+                    int i = (int) arg3;
+                    //gets selectedContact object from contacts ArrayList by selectedID
+                    selectedOption = groups.get(i).toString();
+                    // Create a new intent to open the {@link FamilyActivity}
+                    Intent chatIntent = new Intent(GroupsOfExercisesActivity.this, ExercisesActivity.class);
+                    // Start the new activity
+                    startActivity(chatIntent);
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(), "Error during loading exercises!", Toast.LENGTH_LONG);
+                    toast.show();
+                }
             }
         });
     }
