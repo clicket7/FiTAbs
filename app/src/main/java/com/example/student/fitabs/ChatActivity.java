@@ -25,7 +25,7 @@ import java.util.ArrayList;
  */
 
 public class ChatActivity extends AppCompatActivity implements Runnable {
-    public ArrayList<String> chatMessages;
+    public ArrayList<String> chatMessages = new ArrayList<String>();
     private ListView chatWindow;
     private EditText editMessage;
     private Client client;
@@ -47,9 +47,9 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         editMessage = (EditText) findViewById(R.id.editMessage);
         chatWindow = (ListView) findViewById(R.id.chat);
 
-        chatMessages = new ArrayList<String>();
         mAdapter = new ClientListAdapter(this, chatMessages);
         chatWindow.setAdapter(mAdapter);
+
 
 
         //Define bottom navigation view (thats why design library in gradle was imported)
@@ -91,12 +91,12 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         dbHandler = new DBHandler(this);
         user = dbHandler.getUser(1);
 
-        client = new Client();
-        client.execute(host, user.getName() + " is online");
-
         t = new Thread(this);
         t.start();
         mAdapter.notifyDataSetChanged();
+
+        client = new Client();
+        client.execute(host, user.getName() + " is online");
 
         dbHandler.close();
     }
@@ -104,7 +104,6 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
     public void sendMsg(View view) {
         dbHandler = new DBHandler(this);
         user = dbHandler.getUser(1);
-
         String msg = editMessage.getText().toString();
 
         client = new Client();
@@ -122,9 +121,15 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
             String msg;
+            int i = chatMessages.size();
             while ((msg = in.readLine()) != null) {
                 Log.e("I", msg);
                 chatMessages.add(msg);
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
             }
             socket.close();
         } catch (IOException e) {
@@ -143,6 +148,7 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
                 socket = new Socket(ip, 9999);
                 OutputStream out = socket.getOutputStream();
                 out.write(data.getBytes());
+                Log.e("Send", data);
                 socket.close();
             } catch (IOException e) {
                 e.printStackTrace();
