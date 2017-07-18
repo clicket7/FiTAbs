@@ -33,6 +33,10 @@ public class GroupsOfExercisesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groups_of_exercises);
 
+        dbHandler = new DBHandler(this);
+        listView = (ListView) findViewById(R.id.exerciseList);
+        groups = new ArrayList<>();
+
         //Define bottom navigation view (thats why design library in gradle was imported)
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         //Display right icon
@@ -65,6 +69,7 @@ public class GroupsOfExercisesActivity extends AppCompatActivity {
 
         StringAdapter adapter = new StringAdapter(this, groups);
         listView.setAdapter(adapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View v, int position, long arg3) {
