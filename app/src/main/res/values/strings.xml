@@ -10,8 +10,9 @@
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="noUserName">Please, input your username first!</string>
 
         <string name="btn_save">Save</string>
-        <string name="btn_edit">Edit</string>
+        <Savestring name="btn_edit">Edit</Savestring>
 
 </resources>
