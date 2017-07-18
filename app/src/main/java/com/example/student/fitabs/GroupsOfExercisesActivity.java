@@ -21,7 +21,7 @@ public class GroupsOfExercisesActivity extends AppCompatActivity {
         //Define bottom navigation view (thats why design library in gradle was imported)
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         //Display right icon
-        bottomNavigationView.getMenu().getItem(0).setChecked(true);
+        bottomNavigationView.getMenu().getItem(1).setChecked(true);
         //Define Bottom navigation view listener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             //Selected icon(item) - changes to the appropriate view
