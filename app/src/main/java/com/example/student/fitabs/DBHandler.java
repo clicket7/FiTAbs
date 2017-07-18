@@ -70,12 +70,12 @@ public class DBHandler extends SQLiteOpenHelper {
 
         String CREATE_CHAT_MESSAGE_TABLE = "CREATE TABLE " + TABLE_CHAT_MESSAGE + "("
                 + KEY_CM_ID + " INTEGER PRIMARY KEY," + KEY_CM_CONTACT_NUMBER + " TEXT, "
-                + KEY_CM_MSG + " TEXT, " + ")";
+                + KEY_CM_MSG + " TEXT" + ")";
         db.execSQL(CREATE_CHAT_MESSAGE_TABLE);
 
         String CREATE_EXERCISE_TABLE = "CREATE TABLE " + TABLE_EXERCISES + "("
                 + KEY_EX_ID + " INTEGER PRIMARY KEY," + KEY_EX_TYPE + " TEXT, "
-                + KEY_EX_NAME + " TEXT, " + KEY_EX_DESCRIPTION + " TEXT, " + KEY_EX_IMAGE + " TEXT, " + ")";
+                + KEY_EX_NAME + " TEXT, " + KEY_EX_DESCRIPTION + " TEXT, " + KEY_EX_IMAGE + " TEXT" + ")";
         db.execSQL(CREATE_EXERCISE_TABLE);
     }
 

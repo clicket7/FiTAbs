@@ -65,45 +65,6 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         mAdapter = new ClientListAdapter(this, chatMessages);
         chatWindow.setAdapter(mAdapter);
 
-
-
-        //Define bottom navigation view (thats why design library in gradle was imported)
-        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-
-        //Display right icon
-        bottomNavigationView.getMenu().getItem(1).setChecked(true);
-
-        //Define Bottom navigation view listener
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-            //Selected icon(item) - changes to the appropriate view
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    //Contacts
-                    case R.id.action_contacts:
-                        startActivity(new Intent(ChatActivity.this, ContactsActivity.class));
-                        break;
-
-                    //Exercise
-                    case R.id.action_exercise:
-                        startActivity(new Intent(ChatActivity.this, GroupsOfExercisesActivity.class));
-                        break;
-
-                    //Calendar
-                    case R.id.action_calendar:
-                        startActivity(new Intent(ChatActivity.this, MyCalendarActivity.class));
-                        break;
-
-                    //Settings
-                    case R.id.action_settings:
-                        startActivity(new Intent(ChatActivity.this, UserSettingsActivity.class));
-                        break;
-                }
-                return true;
-            }
-        });
-
         //finds and selects  deleteButton view
         delete = (Button) findViewById(R.id.deleteButton);
         delete.setOnClickListener(new View.OnClickListener(){
@@ -193,5 +154,10 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
 
             return new Long(1);
         }
+    }
+
+    public void backToContacts(View view) {
+        Intent intent = new Intent(ChatActivity.this, ContactsActivity.class);
+        startActivity(intent);
     }
 }
