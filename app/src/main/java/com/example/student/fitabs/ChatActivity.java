@@ -98,12 +98,12 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         dbHandler = new DBHandler(this);
         user = dbHandler.getUser(1);
 
+        client = new Client();
+        client.execute(host, user.getName() + " is online");
+
         t = new Thread(this);
         t.start();
         mAdapter.notifyDataSetChanged();
-
-        client = new Client();
-        client.execute(host, user.getName() + " is online");
 
         dbHandler.close();
     }
