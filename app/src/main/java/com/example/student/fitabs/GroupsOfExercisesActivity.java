@@ -6,12 +6,20 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import java.util.List;
 
 /**
  * Created by student on 17.18.7.
  */
 
 public class GroupsOfExercisesActivity extends AppCompatActivity {
+    private ListView listView;
+    private List<String> groups;
+    private DBHandler dbHandler;
+    static public String selectedOption;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
