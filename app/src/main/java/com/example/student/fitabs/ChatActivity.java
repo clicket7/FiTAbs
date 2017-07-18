@@ -15,9 +15,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -38,12 +41,14 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
 
     private static int port = 9999;
     private String host = "192.168.8.117";
-    private Socket socket;
+    static private Socket socket;
     private BufferedReader in;
+    static private DataOutputStream os;
     Thread t;
 
     DBHandler dbHandler;
     User user;
+    public String user2;
     Button delete;
 
     @Override
@@ -111,9 +116,7 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
 
         dbHandler = new DBHandler(this);
         user = dbHandler.getUser(1);
-
-        client = new Client();
-        client.execute(host, user.getName() + " is online");
+        user2 = nameTo.getText().toString();
 
         t = new Thread(this);
         t.start();
@@ -126,6 +129,8 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         dbHandler = new DBHandler(this);
         user = dbHandler.getUser(1);
         String msg = editMessage.getText().toString();
+        chatMessages.add(user.getName() + ": " + msg);
+        mAdapter.notifyDataSetChanged();
 
         client = new Client();
         client.execute(host, user.getName() + ": " + msg);
@@ -140,9 +145,16 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         try {
             socket = new Socket(host, port);
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            os = new DataOutputStream(socket.getOutputStream());
+
+            if (socket != null && in != null && os != null) {
+                os.writeBytes(user.getName() + "\n");
+                os.writeBytes(user2 + "\n");
+                os.writeBytes(user.getName() + " is online\n");
+                Log.e("Send", "ok");
+            }
 
             String msg;
-            int i = chatMessages.size();
             while ((msg = in.readLine()) != null) {
                 Log.e("I", msg);
                 chatMessages.add(msg);
@@ -152,7 +164,9 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
                     }
                 });
             }
-            socket.close();
+   //         in.close();
+   //         os.close();
+    //        socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -167,8 +181,10 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
             Socket socket = null;
             try {
                 socket = new Socket(ip, 9999);
-                OutputStream out = socket.getOutputStream();
-                out.write(data.getBytes());
+                DataOutputStream output = new DataOutputStream(socket.getOutputStream());
+                output.writeBytes(user.getName() + "\n");
+                output.writeBytes(user2 + "\n");
+                output.writeBytes(data + "\n");
                 Log.e("Send", data);
                 socket.close();
             } catch (IOException e) {
