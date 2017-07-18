@@ -81,11 +81,11 @@ public class GroupsOfExercisesActivity extends AppCompatActivity {
                     //converts cicked item postion id from long to int
                     int i = (int) arg3;
                     //gets selectedContact object from contacts ArrayList by selectedID
-                    selectedOption = groups.get(i).toString();
+                    selectedOption = groups.get(i);
                     // Create a new intent to open the {@link FamilyActivity}
-                    Intent chatIntent = new Intent(GroupsOfExercisesActivity.this, ExercisesActivity.class);
+                    Intent intent = new Intent(GroupsOfExercisesActivity.this, ExercisesActivity.class);
                     // Start the new activity
-                    startActivity(chatIntent);
+                    startActivity(intent);
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(), "Error during loading exercises!", Toast.LENGTH_LONG);
                     toast.show();
