@@ -21,6 +21,8 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
+import static com.example.student.fitabs.ContactsActivity.selectedContactName;
+
 
 /**
  * Created by student on 17.11.7.
@@ -102,7 +104,8 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         delete.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick (View v) {
-                
+                dbHandler.deleteContact(selectedContactName);
+                startActivity(new Intent(ChatActivity.this, ContactsActivity.class));
             }
         });
 
