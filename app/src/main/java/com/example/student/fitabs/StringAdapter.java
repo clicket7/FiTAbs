@@ -12,7 +12,7 @@ import java.util.ArrayList;
 /**
  * Created by student on 17.18.7.
  */
-/*
+
 public class StringAdapter extends ArrayAdapter<String> {
     /**
      * Create a new {@link StringAdapter} object.
@@ -20,33 +20,30 @@ public class StringAdapter extends ArrayAdapter<String> {
      * @param context is the current context (i.e. Activity) that the adapter is being created in.
      * @param menu   is the list of contacts to be displayed.
      */
-/*
+
     public StringAdapter(Context context, ArrayList<String> menu) {
-        super(context);
+        super(context, 0, menu);
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         // Check if an existing view is being reused, otherwise inflate the view
         View listItemView = convertView;
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.list_item, parent, false);
+                    R.layout.list_string_item, parent, false);
         }
-        // Get the user object located at this position in the list
-        User currentContact = getItem(position);
-        // Find the TextView in the activity_contacts.xml layout with the ID contactsName.
-        TextView nameTextView = (TextView) listItemView.findViewById(R.id.contactsName);
+        // Get the string object located at this position in the list
+        String currentPosition = getItem(position);
+        // Find the TextView in the activity_.xml layout with the ID contactsName.
+        TextView stringTextView = (TextView) listItemView.findViewById(R.id.exercisePoint);
         // Get the contacts name from the currentContact object and set this text on
         // the contactsName TextView.
-        nameTextView.setText(currentContact.getName());
+        stringTextView.setText(currentPosition);
         // Find the TextView in the activity_contacts.xml layout with the ID contactsPhone.
-        TextView phoneTextView = (TextView) listItemView.findViewById(R.id.contactsPhone);
-        // Get the contactsPhone from the currentContact object and set this text on
-        // the contactsPhone TextView.
-        phoneTextView.setText(currentContact.getTelnumber());
+
         // Return the whole list item layout (containing 2 TextViews) so that it can be shown in
         // the ListView.// Find the View that shows the family category
         return listItemView;
     }
 }
-*/
