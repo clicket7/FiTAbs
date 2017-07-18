@@ -1,4 +1,5 @@
 package com.example.student.fitabs;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,11 +14,14 @@ import android.widget.ListView;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import static android.R.attr.id;
 import static android.media.CamcorderProfile.get;
 import static com.example.student.fitabs.R.id.editUsername;
+
 public class ContactsActivity extends AppCompatActivity {
     private ArrayList<User> contacts;
     DBHandler dbHandler;
@@ -28,6 +32,7 @@ public class ContactsActivity extends AppCompatActivity {
     ArrayList<Boolean> isTrener = new ArrayList<>();
     static public String selectedContactName;
     User selectedContact = new User();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,19 +88,28 @@ public class ContactsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position,
                                     long arg3) {
-                //converts cicked item postion id from long to int
-                int i = (int) arg3;
-                //gets selectedContact object from contacts ArrayList by selectedID
-                selectedContact = contacts.get(i);
-                //initialize selectedContactName string as selectedContact name
-                selectedContactName = selectedContact.getName();
-                // Create a new intent to open the {@link FamilyActivity}
-                Intent chatIntent = new Intent(ContactsActivity.this, ChatActivity.class);
-                // Start the new activity
-                startActivity(chatIntent);
+                SQLiteDatabase database = dbHandler.getReadableDatabase();
+                Cursor cursor = database.query(DBHandler.TABLE_USER,
+                        null, null, null, null, null, null);
+                if (cursor.moveToFirst()) {
+                    //converts cicked item postion id from long to int
+                    int i = (int) arg3;
+                    //gets selectedContact object from contacts ArrayList by selectedID
+                    selectedContact = contacts.get(i);
+                    //initialize selectedContactName string as selectedContact name
+                    selectedContactName = selectedContact.getName();
+                    // Create a new intent to open the {@link FamilyActivity}
+                    Intent chatIntent = new Intent(ContactsActivity.this, ChatActivity.class);
+                    // Start the new activity
+                    startActivity(chatIntent);
+                } else {
+                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.noUserName), Toast.LENGTH_LONG);
+                    toast.show();
+                }
             }
         });
     }
+
     // loads previously entered data from database table TABLE_CONTACTS
     public void readFromDatabase() {
         SQLiteDatabase database = dbHandler.getReadableDatabase();
@@ -114,10 +128,12 @@ public class ContactsActivity extends AppCompatActivity {
         }
         dbHandler.close();
     }
+
     public void addContact(View view) {
         Intent intent = new Intent(ContactsActivity.this, AddContactActivity.class);
         startActivity(intent);
     }
+
     public void deleteContact(View view) {
         Toast toast = Toast.makeText(getApplicationContext(), "It's not finished yet!", Toast.LENGTH_LONG);
         toast.show();

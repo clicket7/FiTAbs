@@ -1,5 +1,7 @@
 package com.example.student.fitabs;
 
+
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,11 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
-
-
 import java.util.ArrayList;
-
-
 import static com.example.student.fitabs.R.id.calendarView;
 
 public class MyCalendarActivity extends AppCompatActivity implements View.OnClickListener{
