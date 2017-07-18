@@ -9,6 +9,7 @@
     <string name="add">Add</string>
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
+    <string name="back">Back</string>
     <string name="save">Save</string>
     <string name="noUserName">Please, input your username first!</string>
 
