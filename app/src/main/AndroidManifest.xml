@@ -12,20 +12,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ContactsActivity" android:noHistory="true">
+
+        <activity
+            android:name=".ContactsActivity" android:noHistory="true" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserSettingsActivity" android:noHistory="true" />
+        <activity android:name=".UserSettingsActivity" android:noHistory="true" android:screenOrientation="portrait"/>
         <activity android:name=".ChatActivity" android:noHistory="true" android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".MyCalendarActivity" android:noHistory="true" />
+        <activity android:name=".MyCalendarActivity" android:noHistory="true" android:screenOrientation="portrait"/>
         <activity android:name=".AddContactActivity" android:noHistory="true" />
         <activity android:name=".GroupsOfExercisesActivity" android:noHistory="true" />
         <activity android:name=".ExercisesActivity" android:noHistory="true" />
         <activity android:name=".ExerciseActivity" android:noHistory="true" />
+
     </application>
 
 </manifest>
