@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,6 +42,7 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
 
     DBHandler dbHandler;
     User user;
+    Button delete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +94,15 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
                         break;
                 }
                 return true;
+            }
+        });
+
+        //finds and selects  deleteButton view
+        delete = (Button) findViewById(R.id.deleteButton);
+        delete.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick (View v) {
+                
             }
         });
 
