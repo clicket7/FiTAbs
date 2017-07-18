@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 
 public class ChatActivity extends AppCompatActivity implements Runnable {
     public ArrayList<String> chatMessages = new ArrayList<String>();
+    private TextView nameTo;
     private ListView chatWindow;
     private EditText editMessage;
     private Client client;
@@ -44,6 +46,10 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat); // initialization of variables and creating activity view
+
+        nameTo = (TextView) findViewById(R.id.contact);
+        nameTo.setText(ContactsActivity.selectedContactName);
+
         editMessage = (EditText) findViewById(R.id.editMessage);
         chatWindow = (ListView) findViewById(R.id.chat);
 

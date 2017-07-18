@@ -41,7 +41,7 @@ public class StringAdapter extends ArrayAdapter<String> {
         // the contactsName TextView.
         stringTextView.setText(currentPosition);
         // Find the TextView in the activity_contacts.xml layout with the ID contactsPhone.
-       
+
         // Return the whole list item layout (containing 2 TextViews) so that it can be shown in
         // the ListView.// Find the View that shows the family category
         return listItemView;
