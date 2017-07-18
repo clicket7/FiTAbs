@@ -21,6 +21,8 @@
         android:layout_weight="0.72"
         android:layout_below="@+id/contact"
         android:layout_alignParentStart="true"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
         android:layout_above="@+id/editMessage"/>
     <EditText
         android:id="@+id/editMessage"
