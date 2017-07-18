@@ -4,6 +4,7 @@ package com.example.student.fitabs;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -118,15 +119,16 @@ public class MyCalendarActivity extends AppCompatActivity implements View.OnClic
      */
     private void handleEdit(){
         _ButtonSave.setText(R.string.btn_save);
+        _ButtonSave.setBackgroundColor(Color.parseColor("#8bc34a"));
         updateEditText();
     }
-
     /**
      * Handles saving schedule
      * @param View view - current view
      */
     private void handleSave(View view){
         _ButtonSave.setText(R.string.btn_edit);
+        _ButtonSave.setBackgroundColor(Color.parseColor("#00b0ff"));
         updateEditText();
         closeOnScreenKeyboard(view);
         if(dayIsAlreadyInList(_SelectedDay)){
