@@ -374,9 +374,9 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // DELETE: Deleting a cotact by contact name
-    public void deleteContact(String contactName) {
+    public void deleteContact(String telNumber) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CONTACTS, "username = ?", new String[]{contactName});
+        db.delete(TABLE_CONTACTS, "TelephoneNumber = ?", new String[]{telNumber});
         db.close();
     }
 

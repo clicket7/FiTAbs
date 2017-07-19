@@ -40,11 +40,13 @@ public class UpdateContactsActivity extends AppCompatActivity {
             toast.show();
         }
         else {
+            dbHandler.deleteContact(ContactsActivity.selectedContactNumber);
             user.setName(username.getText().toString());
             user.setTelnumber(telNumber.getText().toString());
-            dbHandler.updateContact(user);
+            dbHandler.addContacts(user);
             ContactsActivity.selectedContactName = user.getName();
             ContactsActivity.selectedContactNumber = user.getTelnumber();
+
             username.setText("");
             telNumber.setText("");
             dbHandler.close();
