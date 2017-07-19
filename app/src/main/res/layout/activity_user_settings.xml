@@ -111,6 +111,58 @@
         app:layout_constraintTop_toBottomOf="@+id/editTelNumber"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toRightOf="@+id/textAboutNumber" />
+
+    <TextView
+        android:id="@+id/nsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Network Settings"
+        android:textColor="@android:color/black"
+        android:textSize="23sp"
+        android:layout_gravity="center"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toBottomOf="@+id/textAboutStatus"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/textAboutStatus" />
+    <TextView
+        android:id="@+id/textIP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IP"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/nsText"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/nsText" />
+    <EditText
+        android:id="@+id/editIP"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:ems="10"
+        android:hint="IP address"
+        android:inputType="textPersonName"
+        android:maxLength="20"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/IPView"
+        app:layout_constraintRight_toRightOf="@+id/editTelNumber"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/editTelNumber"
+        app:layout_constraintTop_toTopOf="@+id/IPView" />
+    <TextView
+        android:id="@+id/IPView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change username"
+        tools:layout_constraintTop_creator="1"
+        app:layout_constraintTop_toBottomOf="@+id/textIP"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/textIP" />
+    
     <Button
         android:id="@+id/buttonSave"
         android:layout_width="100dp"
@@ -122,7 +174,7 @@
         android:layout_marginEnd="18dp"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginTop="26dp"
-        app:layout_constraintTop_toBottomOf="@+id/textAboutStatus"
+        app:layout_constraintTop_toBottomOf="@+id/editIP"
         android:textColor="#FFFFFF"
         android:background="#8bc34a"/>
     <android.support.design.widget.BottomNavigationView

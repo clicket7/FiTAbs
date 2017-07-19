@@ -25,6 +25,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String TABLE_CHAT_MESSAGE = "ChatMessage";
     public static final String TABLE_EXERCISES = "Exercises";
     public static final String TABLE_IP = "IP";
+    public static final String TABLE_EVENTS = "Events";
 
     // USer Table Columns names
     public static final String KEY_ID = "ID";
@@ -55,9 +56,9 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String KEY_EX_IMAGE= "Image";
 
     //Events Table names
-    //public static final String KEY_E_ID = "ID";
-    //public static final String KEY_E_DATE = "Date";
-    //public static final String KEY_E_EVENT = "Event";
+    public static final String KEY_E_ID = "ID";
+    public static final String KEY_E_DATE = "Date";
+    public static final String KEY_E_EVENT = "Event";
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -89,7 +90,10 @@ public class DBHandler extends SQLiteOpenHelper {
                 + KEY_EX_NAME + " TEXT, " + KEY_EX_DESCRIPTION + " TEXT, " + KEY_EX_IMAGE + " TEXT" + ")";
         db.execSQL(CREATE_EXERCISE_TABLE);
 
-       // String CREATE_EVENTS_TABLE = "CREATE TABLE " +
+        String CREATE_EVENTS_TABLE = "CREATE TABLE " + TABLE_EVENTS + "("
+                + KEY_E_ID + " INTEGER PRIMARY KEY," + KEY_E_DATE + " DATETIME, "
+                + KEY_E_EVENT + " TEXT, " + ")";
+        db.execSQL(CREATE_EVENTS_TABLE);
     }
 
     @Override
@@ -100,6 +104,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CHAT_MESSAGE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXERCISES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_IP);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
         // Creating tables again
         onCreate(db);
     }
@@ -116,6 +121,26 @@ public class DBHandler extends SQLiteOpenHelper {
         db.insert(TABLE_USER, null, values);
         db.close(); // Closing database connection
     }
+    public void addEvent(String event) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_E_EVENT, event);
+        db.insert(TABLE_EVENTS, null, values);
+        db.close();
+    }
+
+    public String getEvent() {
+        String event = "";
+        String selectQuery = "SELECT KEY_E_EVENT FROM " + TABLE_EVENTS;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) event = cursor.getString(0);
+        cursor.close();
+        db.close();
+        return event;
+    }
+
+
 
     public void addIP(String ip) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -329,7 +354,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_C_TEL_NUMBER, user.getTelnumber());
         values.put(KEY_C_IS_TRENER, user.getStatus());
         // updating row
-        return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
+        return db.update(TABLE_CONTACTS, values, KEY_C_ID + " = ?",
                 new String[]{String.valueOf(user.getId())});
     }
 
