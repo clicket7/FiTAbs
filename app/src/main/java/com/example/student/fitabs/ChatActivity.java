@@ -23,7 +23,9 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
+import static android.media.CamcorderProfile.get;
 import static com.example.student.fitabs.ContactsActivity.selectedContactName;
 import static com.example.student.fitabs.ContactsActivity.selectedContactNumber;
 
@@ -64,6 +66,8 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
 
         mAdapter = new ClientListAdapter(this, chatMessages);
         chatWindow.setAdapter(mAdapter);
+
+        readMsg();
 
         //Define bottom navigation view (thats why design library in gradle was imported)
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -126,9 +130,23 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         client = new Client();
         client.execute(host, user.getName() + ": " + msg);
 
+        
+
         editMessage.setText("");
         dbHandler.close();
 
+    }
+
+    public void readMsg(){
+        dbHandler = new DBHandler(this);
+       ArrayList<ChatMessage > msg;
+        String m;
+        msg = (ArrayList<ChatMessage>)dbHandler.getAllChatMessages(selectedContactNumber);
+        for (int iter = 0; iter > msg.size() + 1 ; iter++) {
+           ChatMessage selectedMsg =  msg.get(iter);
+            m = selectedMsg.getMessage().toString();
+            chatMessages.set(iter, m);
+        }
     }
 
     @Override
