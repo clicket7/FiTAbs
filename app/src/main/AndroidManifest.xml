@@ -25,6 +25,7 @@
         <activity android:name=".ChatActivity" android:noHistory="true" android:windowSoftInputMode="stateHidden" android:screenOrientation="portrait"/>
         <activity android:name=".MyCalendarActivity" android:noHistory="true" android:screenOrientation="portrait"/>
         <activity android:name=".AddContactActivity" android:noHistory="true" />
+        <activity android:name=".UpdateContactsActivity" android:noHistory="true" />
         <activity android:name=".GroupsOfExercisesActivity" android:noHistory="true" />
         <activity android:name=".ExercisesActivity" android:noHistory="true" />
         <activity android:name=".ExerciseActivity" android:noHistory="true" />

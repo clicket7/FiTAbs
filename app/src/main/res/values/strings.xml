@@ -8,6 +8,7 @@
     <string name="saveSucc">User info successfully saved</string>
     <string name="add">Add</string>
     <string name="addC">Add new contact</string>
+    <string name="update">Update</string>
     <string name="delete">Delete</string>
     <string name="deleteC">Delete contact</string>
     <string name="editC">Edit contact</string>
