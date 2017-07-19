@@ -141,6 +141,14 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
         return event;
     }
+    public int updateEvent(String event) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_E_EVENT, event);
+        // updating row
+        return db.update(TABLE_EVENTS, values, KEY_E_EVENT + " = ?",
+                new String[]{event});
+    }
 
     public void addIP(String ip) {
         SQLiteDatabase db = this.getWritableDatabase();
