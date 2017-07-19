@@ -76,7 +76,7 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     //Contacts
-                    case R.id.action_contacts:
+                    case R.id.action_back:
                         startActivity(new Intent(ChatActivity.this, ContactsActivity.class));
                         break;
                     //Exercise
