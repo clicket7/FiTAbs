@@ -23,7 +23,9 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.List;
 
+import static android.media.CamcorderProfile.get;
 import static com.example.student.fitabs.ContactsActivity.selectedContactName;
 import static com.example.student.fitabs.ContactsActivity.selectedContactNumber;
 
@@ -41,7 +43,7 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
     private ClientListAdapter mAdapter;
 
     private static int port = 9999;
-    private String host;
+    private String host = "54.93.187.118";
     static private Socket socket;
     private BufferedReader in;
     static private DataOutputStream os;
@@ -121,10 +123,12 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
 
         dbHandler = new DBHandler(this);
         user = dbHandler.getUser(1);
-        host = dbHandler.getIP();
 
         t = new Thread(this);
         t.start();
+
+        if (!dbHandler.TABLE_CHAT_MESSAGE.isEmpty())readMsg();
+
         mAdapter.notifyDataSetChanged();
 
         dbHandler.close();
@@ -140,9 +144,23 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         client = new Client();
         client.execute(host, user.getName() + ": " + msg);
 
+        dbHandler.addChatMessages(chatMessages,selectedContactNumber );
+
         editMessage.setText("");
         dbHandler.close();
 
+    }
+
+    public void readMsg(){
+        dbHandler = new DBHandler(this);
+       ArrayList<ChatMessage > msg;
+        String m;
+        msg = (ArrayList<ChatMessage>)dbHandler.getAllChatMessages(selectedContactNumber);
+        for (int iter = 0; iter > msg.size() + 1 ; iter++) {
+           ChatMessage selectedMsg =  msg.get(iter);
+            m = selectedMsg.getMessage().toString();
+            chatMessages.set(iter, m);
+        }
     }
 
     @Override

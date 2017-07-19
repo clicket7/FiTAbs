@@ -269,13 +269,13 @@ public class DBHandler extends SQLiteOpenHelper {
         return contactList;
     }
 
-    // READ: Getting All ChatMessages by telephoneNumber
+    // READ: Getting  ChatMessages by telephoneNumber
     public List<ChatMessage> getAllChatMessages(String number) {
         List<ChatMessage> msgList = new ArrayList<>();
         // Select All Query
         String selectQuery = "SELECT * FROM " + TABLE_CHAT_MESSAGE + "WHERE telephoneNumber = ?" + number;
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery(selectQuery,null);
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {ChatMessage message = new ChatMessage();
