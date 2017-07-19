@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class UserSettingsActivity extends AppCompatActivity {
 
-    EditText editUsername, editNumber;
+    EditText editUsername, editNumber, editIp;
     CheckBox checkStatus;
     DBHandler dbHandler;
     Integer activeId;
@@ -37,6 +37,7 @@ public class UserSettingsActivity extends AppCompatActivity {
         editUsername = (EditText) findViewById(R.id.editUsername);
         editNumber = (EditText) findViewById(R.id.editTelNumber);
         checkStatus = (CheckBox) findViewById(R.id.checkBoxStatus);
+        editIp = (EditText) findViewById(R.id.editIP);
 
 
         dbHandler = new DBHandler(this);
@@ -51,28 +52,29 @@ public class UserSettingsActivity extends AppCompatActivity {
         Cursor cursor = database.query(DBHandler.TABLE_USER,
                 null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
-            int idIndex = cursor.getColumnIndex(dbHandler.KEY_ID);
-            int usernameIndex = cursor.getColumnIndex(dbHandler.KEY_USERNAME);
-            int telNumberIndex = cursor.getColumnIndex(dbHandler.KEY_TEL_NUMBER);
-            int statusIndex = cursor.getColumnIndex(dbHandler.KEY_IS_TRENER);
-            do {
-                id.add(cursor.getInt(idIndex));
-                usernames.add(cursor.getString(usernameIndex));
-                telNumber.add(cursor.getString(telNumberIndex));
-                isTrener.add(cursor.getInt(statusIndex) > 0);
-
-            } while (cursor.moveToNext());
+            user = dbHandler.getUser(0);
 
         } else{
             Toast toast = Toast.makeText(getApplicationContext(), "Table is empty", Toast.LENGTH_LONG);
             toast.show();
         }
         if (!id.isEmpty()) {
-            editUsername.setText(usernames.get(0));
-            editNumber.setText(telNumber.get(0) );
-            checkStatus.setChecked(isTrener.get(0));
-            activeId = id.get(0);
+            editUsername.setText(user.getName());
+            editNumber.setText(user.getTelnumber());
+            checkStatus.setChecked(user.getStatus());
         }
+
+        database = dbHandler.getReadableDatabase();
+        cursor = database.query(DBHandler.TABLE_IP,
+                null, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            editIp.setText(cursor.getString(0));
+
+        } else{
+            editIp.setText("");
+        }
+
+        cursor.close();
         dbHandler.close();
 
         //Define bottom navigation view (thats why design library in gradle was imported)
@@ -116,7 +118,7 @@ public class UserSettingsActivity extends AppCompatActivity {
     //saves user's entered info
     public void saveUser(View view) {
         //gives error message is user didn't fill in all fields
-        if (editUsername.getText().toString().equals("") || editNumber.getText().toString().equals("") ) {
+        if (editUsername.getText().toString().equals("") || editNumber.getText().toString().equals("") || editIp.getText().toString().equals("")) {
             Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.noValueEntered), Toast.LENGTH_LONG);
             toast.show();
         }
@@ -137,6 +139,11 @@ public class UserSettingsActivity extends AppCompatActivity {
             contentValues.put(DBHandler.KEY_IS_TRENER, user.getStatus());
 
             database.insert(DBHandler.TABLE_USER, null, contentValues);
+
+            contentValues = new ContentValues();
+            contentValues.put(DBHandler.KEY_IP, editIp.getText().toString());
+
+            database.insert(DBHandler.TABLE_IP, null, contentValues);
 
             Toast toast = Toast.makeText (getApplicationContext(), getString(R.string.saveSucc), Toast.LENGTH_LONG);
             toast.show();
