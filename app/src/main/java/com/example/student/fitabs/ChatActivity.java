@@ -25,6 +25,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 import static com.example.student.fitabs.ContactsActivity.selectedContactName;
+import static com.example.student.fitabs.ContactsActivity.selectedContactNumber;
 
 
 /**
@@ -48,7 +49,6 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
 
     DBHandler dbHandler;
     User user;
-    public String user2;
     Button delete;
 
     @Override
@@ -65,6 +65,37 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         mAdapter = new ClientListAdapter(this, chatMessages);
         chatWindow.setAdapter(mAdapter);
 
+        //Define bottom navigation view (thats why design library in gradle was imported)
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        //Display right icon
+        bottomNavigationView.getMenu().getItem(0).setChecked(true);
+        //Define Bottom navigation view listener
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            //Selected icon(item) - changes to the appropriate view
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    //Contacts
+                    case R.id.action_contacts:
+                        startActivity(new Intent(ChatActivity.this, ContactsActivity.class));
+                        break;
+                    //Exercise
+                    case R.id.action_exercise:
+                        startActivity(new Intent(ChatActivity.this, GroupsOfExercisesActivity.class));
+                        break;
+                    //Calendar
+                    case R.id.action_calendar:
+                        startActivity(new Intent(ChatActivity.this, MyCalendarActivity.class));
+                        break;
+                    //Settings
+                    case R.id.action_settings:
+                        startActivity(new Intent(ChatActivity.this, UserSettingsActivity.class));
+                        break;
+                }
+                return true;
+            }
+        });
+
         //finds and selects  deleteButton view
         delete = (Button) findViewById(R.id.deleteButton);
         delete.setOnClickListener(new View.OnClickListener(){
@@ -77,7 +108,6 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
 
         dbHandler = new DBHandler(this);
         user = dbHandler.getUser(1);
-        user2 = nameTo.getText().toString();
 
         t = new Thread(this);
         t.start();
@@ -109,8 +139,8 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
             os = new DataOutputStream(socket.getOutputStream());
 
             if (socket != null && in != null && os != null) {
-                os.writeBytes(user.getName() + "\n");
-                os.writeBytes(user2 + "\n");
+                os.writeBytes(user.getTelnumber() + "\n");
+                os.writeBytes(selectedContactNumber + "\n");
                 os.writeBytes(user.getName() + " is online\n");
                 Log.e("Send", "ok");
             }
@@ -125,9 +155,6 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
                     }
                 });
             }
-   //         in.close();
-   //         os.close();
-    //        socket.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -143,8 +170,8 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
             try {
                 socket = new Socket(ip, 9999);
                 DataOutputStream output = new DataOutputStream(socket.getOutputStream());
-                output.writeBytes(user.getName() + "\n");
-                output.writeBytes(user2 + "\n");
+                output.writeBytes(user.getTelnumber() + "\n");
+                output.writeBytes(selectedContactNumber + "\n");
                 output.writeBytes(data + "\n");
                 Log.e("Send", data);
                 socket.close();

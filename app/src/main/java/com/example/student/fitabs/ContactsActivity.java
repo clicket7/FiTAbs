@@ -32,6 +32,7 @@ public class ContactsActivity extends AppCompatActivity {
     ListView listContacts;
     ArrayList<Boolean> isTrener = new ArrayList<>();
     static public String selectedContactName;
+    static public String selectedContactNumber;
     User selectedContact = new User();
 
     @Override
@@ -98,6 +99,7 @@ public class ContactsActivity extends AppCompatActivity {
                     selectedContact = contacts.get(i);
                     //initialize selectedContactName string as selectedContact name
                     selectedContactName = selectedContact.getName();
+                    selectedContactNumber = selectedContact.getTelnumber();
                     // Create a new intent to open the {@link FamilyActivity}
                     Intent chatIntent = new Intent(ContactsActivity.this, ChatActivity.class);
                     // Start the new activity
