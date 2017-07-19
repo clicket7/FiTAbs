@@ -354,7 +354,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_C_TEL_NUMBER, user.getTelnumber());
         values.put(KEY_C_IS_TRENER, user.getStatus());
         // updating row
-        return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
+        return db.update(TABLE_CONTACTS, values, KEY_C_ID + " = ?",
                 new String[]{String.valueOf(user.getId())});
     }
 
