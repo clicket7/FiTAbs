@@ -52,23 +52,21 @@ public class UserSettingsActivity extends AppCompatActivity {
         Cursor cursor = database.query(DBHandler.TABLE_USER,
                 null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
-            user = dbHandler.getUser(0);
+            user = dbHandler.getUser(1);
+            editUsername.setText(user.getName());
+            editNumber.setText(user.getTelnumber());
+            checkStatus.setChecked(user.getStatus());
 
         } else{
             Toast toast = Toast.makeText(getApplicationContext(), "Table is empty", Toast.LENGTH_LONG);
             toast.show();
-        }
-        if (!id.isEmpty()) {
-            editUsername.setText(user.getName());
-            editNumber.setText(user.getTelnumber());
-            checkStatus.setChecked(user.getStatus());
         }
 
         database = dbHandler.getReadableDatabase();
         cursor = database.query(DBHandler.TABLE_IP,
                 null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
-            editIp.setText(cursor.getString(0));
+            editIp.setText(dbHandler.getIP());
 
         } else{
             editIp.setText("");

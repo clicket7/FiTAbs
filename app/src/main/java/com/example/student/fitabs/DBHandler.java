@@ -92,7 +92,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         String CREATE_EVENTS_TABLE = "CREATE TABLE " + TABLE_EVENTS + "("
                 + KEY_E_ID + " INTEGER PRIMARY KEY," + KEY_E_DATE + " DATETIME, "
-                + KEY_E_EVENT + " TEXT, " + ")";
+                + KEY_E_EVENT + " TEXT " + ")";
         db.execSQL(CREATE_EVENTS_TABLE);
     }
 
@@ -156,7 +156,7 @@ public class DBHandler extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM " + TABLE_IP;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.moveToFirst()) ip = cursor.getString(0);
+        if (cursor.moveToFirst()) ip = cursor.getString(1);
         cursor.close();
         db.close();
         return ip;
