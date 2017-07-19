@@ -3,7 +3,6 @@ package com.example.student.fitabs;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.net.sip.SipAudioCall;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -74,7 +73,7 @@ public class GroupsOfExercisesActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View v, int position, long arg3) {
                 SQLiteDatabase database = dbHandler.getReadableDatabase();
-                Cursor cursor = database.query(DBHandler.TABLE_USER,
+                Cursor cursor = database.query(DBHandler.TABLE_EXERCISES,
                         null, null, null, null, null, null);
 
                 if (cursor.moveToFirst()) {
@@ -90,13 +89,16 @@ public class GroupsOfExercisesActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(getApplicationContext(), "Error during loading exercises!", Toast.LENGTH_LONG);
                     toast.show();
                 }
+
+                cursor.close();
+                dbHandler.close();
             }
         });
     }
 
     public void readFromDatabase() {
         SQLiteDatabase database = dbHandler.getReadableDatabase();
-        Cursor cursor = database.query(DBHandler.TABLE_CONTACTS,
+        Cursor cursor = database.query(DBHandler.TABLE_EXERCISES,
                 null, null, null, null, null, null);
 
         if (cursor.moveToFirst()) {
@@ -106,6 +108,7 @@ public class GroupsOfExercisesActivity extends AppCompatActivity {
             toast.show();
         }
 
+        cursor.close();
         dbHandler.close();
     }
 

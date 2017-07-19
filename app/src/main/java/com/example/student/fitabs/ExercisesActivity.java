@@ -17,7 +17,6 @@ import java.util.ArrayList;
  */
 
 public class ExercisesActivity extends AppCompatActivity {
-    private TextView label;
     private ArrayList<String> exercises;
     private ListView listExercises;
     private DBHandler dbHandler;
@@ -27,7 +26,7 @@ public class ExercisesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercises);
 
-        label = (TextView) findViewById(R.id.groupName);
+        TextView label = (TextView) findViewById(R.id.groupName);
         label.setText(GroupsOfExercisesActivity.selectedOption);
         exercises = new ArrayList<>();
         listExercises = (ListView) findViewById(R.id.exercises);
@@ -42,7 +41,7 @@ public class ExercisesActivity extends AppCompatActivity {
 
     public void readFromDatabase() {
         SQLiteDatabase database = dbHandler.getReadableDatabase();
-        Cursor cursor = database.query(DBHandler.TABLE_CONTACTS,
+        Cursor cursor = database.query(DBHandler.TABLE_EXERCISES,
                 null, null, null, null, null, null);
 
         if (cursor.moveToFirst()) {
@@ -52,6 +51,7 @@ public class ExercisesActivity extends AppCompatActivity {
             toast.show();
         }
 
+        cursor.close();
         dbHandler.close();
     }
 
