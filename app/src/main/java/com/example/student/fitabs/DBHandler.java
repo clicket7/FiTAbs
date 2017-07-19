@@ -24,12 +24,17 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String TABLE_CONTACTS = "Contacts";
     public static final String TABLE_CHAT_MESSAGE = "ChatMessage";
     public static final String TABLE_EXERCISES = "Exercises";
+    public static final String TABLE_IP = "IP";
 
     // USer Table Columns names
     public static final String KEY_ID = "ID";
     public static final String KEY_USERNAME = "Username";
     public static final String KEY_TEL_NUMBER = "TelephoneNumber";
     public static final String KEY_IS_TRENER = "IsTrener";
+
+    // IP Table Columns names
+    public static final String KEY_IP_ID = "ID";
+    public static final String KEY_IP = "IP";
 
     // Contacts Table Columns names
     public static final String KEY_C_ID = "ID";
@@ -65,6 +70,10 @@ public class DBHandler extends SQLiteOpenHelper {
                 + KEY_TEL_NUMBER + " TEXT, " + KEY_IS_TRENER + " TEXT" + ")";
         db.execSQL(CREATE_USERS_TABLE);
 
+        String CREATE_IP_TABLE = "CREATE TABLE " + TABLE_IP + "("
+                + KEY_IP_ID + " INTEGER PRIMARY KEY," + KEY_IP + " TEXT)";
+        db.execSQL(CREATE_IP_TABLE);
+
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
                 + KEY_C_ID + " INTEGER PRIMARY KEY," + KEY_C_USERNAME + " TEXT, "
                 + KEY_C_TEL_NUMBER + " TEXT, " + KEY_C_IS_TRENER + " TEXT" + ")";
@@ -90,6 +99,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CHAT_MESSAGE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXERCISES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_IP);
         // Creating tables again
         onCreate(db);
     }
@@ -105,6 +115,32 @@ public class DBHandler extends SQLiteOpenHelper {
         // Inserting Row
         db.insert(TABLE_USER, null, values);
         db.close(); // Closing database connection
+    }
+
+    public void addIP(String ip) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        //map user values with table’s column using ContentValues object
+        ContentValues values = new ContentValues();
+        values.put(KEY_IP, ip);
+        db.insert(TABLE_IP, null, values);
+        db.close();
+    }
+
+    public String getIP() {
+        String ip = "";
+        String selectQuery = "SELECT * FROM " + TABLE_IP;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) ip = cursor.getString(0);
+        cursor.close();
+        db.close();
+        return ip;
+    }
+
+    public void deleteIP() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_IP, null, null);
+        db.close();
     }
 
     //  INSERT : Adding new contacts
