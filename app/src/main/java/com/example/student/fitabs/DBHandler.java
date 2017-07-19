@@ -9,9 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.type;
-import static android.R.id.message;
-
 /**
  * Created by Sandra Bogusha on 17.11.7.
  */
@@ -52,6 +49,11 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String KEY_EX_DESCRIPTION = "ExerciseDescription";
     public static final String KEY_EX_IMAGE= "Image";
 
+    //Events Table names
+    //public static final String KEY_E_ID = "ID";
+    //public static final String KEY_E_DATE = "Date";
+    //public static final String KEY_E_EVENT = "Event";
+
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -77,6 +79,8 @@ public class DBHandler extends SQLiteOpenHelper {
                 + KEY_EX_ID + " INTEGER PRIMARY KEY," + KEY_EX_TYPE + " TEXT, "
                 + KEY_EX_NAME + " TEXT, " + KEY_EX_DESCRIPTION + " TEXT, " + KEY_EX_IMAGE + " TEXT" + ")";
         db.execSQL(CREATE_EXERCISE_TABLE);
+
+       // String CREATE_EVENTS_TABLE = "CREATE TABLE " +
     }
 
     @Override
