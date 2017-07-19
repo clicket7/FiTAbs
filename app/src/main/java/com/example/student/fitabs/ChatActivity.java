@@ -41,7 +41,7 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
     private ClientListAdapter mAdapter;
 
     private static int port = 9999;
-    private String host = "192.168.8.117";
+    private String host = "54.213.115.237";
     static private Socket socket;
     private BufferedReader in;
     static private DataOutputStream os;
