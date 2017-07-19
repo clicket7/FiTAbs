@@ -42,7 +42,7 @@ public class UpdateContactsActivity extends AppCompatActivity {
         else {
             user.setName(username.getText().toString());
             user.setTelnumber(telNumber.getText().toString());
-            dbHandler.updateContact(user, ContactsActivity.selectedContactNumber);
+            dbHandler.updateContact(user);
             ContactsActivity.selectedContactName = user.getName();
             ContactsActivity.selectedContactNumber = user.getTelnumber();
             username.setText("");
