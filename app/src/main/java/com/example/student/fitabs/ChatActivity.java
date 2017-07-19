@@ -43,7 +43,7 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
     private ClientListAdapter mAdapter;
 
     private static int port = 9999;
-    private String host = "54.213.115.237";
+    private String host = "54.93.187.118";
     static private Socket socket;
     private BufferedReader in;
     static private DataOutputStream os;
@@ -66,8 +66,6 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
 
         mAdapter = new ClientListAdapter(this, chatMessages);
         chatWindow.setAdapter(mAdapter);
-
-        readMsg();
 
         //Define bottom navigation view (thats why design library in gradle was imported)
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -128,6 +126,9 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
 
         t = new Thread(this);
         t.start();
+
+        if (!dbHandler.TABLE_CHAT_MESSAGE.isEmpty())readMsg();
+
         mAdapter.notifyDataSetChanged();
 
         dbHandler.close();
