@@ -91,7 +91,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL(CREATE_EXERCISE_TABLE);
 
         String CREATE_EVENTS_TABLE = "CREATE TABLE " + TABLE_EVENTS + "("
-                + KEY_E_ID + " INTEGER PRIMARY KEY," + KEY_E_DATE + " DATETIME, "
+                + KEY_E_ID + " INTEGER PRIMARY KEY," + KEY_E_DATE + " TEXT, "
                 + KEY_E_EVENT + " TEXT " + ")";
         db.execSQL(CREATE_EVENTS_TABLE);
     }
@@ -121,17 +121,19 @@ public class DBHandler extends SQLiteOpenHelper {
         db.insert(TABLE_USER, null, values);
         db.close(); // Closing database connection
     }
-    public void addEvent(String event) {
+    public void addEvent(String event, Day day) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_E_EVENT, event);
+        values.put(KEY_E_DATE, day.getDay() + "/" + day.getMonth() + "/" + day.getYear());
         db.insert(TABLE_EVENTS, null, values);
         db.close();
     }
 
-    public String getEvent() {
+    public String getEvent(Day day) {
         String event = "";
-        String selectQuery = "SELECT KEY_E_EVENT FROM " + TABLE_EVENTS;
+        String date = day.getDay() + "/" + day.getMonth() + "/" + day.getYear();
+        String selectQuery = "SELECT " + KEY_E_EVENT +  " FROM " + TABLE_EVENTS + " WHERE " + KEY_E_EVENT + "= '" + date + "'";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) event = cursor.getString(0);
@@ -139,8 +141,6 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
         return event;
     }
-
-
 
     public void addIP(String ip) {
         SQLiteDatabase db = this.getWritableDatabase();
