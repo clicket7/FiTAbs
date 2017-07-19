@@ -143,7 +143,7 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         client = new Client();
         client.execute(host, user.getName() + ": " + msg);
 
-        
+        dbHandler.addChatMessages(chatMessages,selectedContactNumber );
 
         editMessage.setText("");
         dbHandler.close();
