@@ -49,7 +49,7 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
 
     DBHandler dbHandler;
     User user;
-    Button delete;
+    Button delete, update;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +105,19 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
                 startActivity(new Intent(ChatActivity.this, ContactsActivity.class));
             }
         });
+
+
+        //Update contacts information
+        update = (Button) findViewById(R.id.editButton);
+        update.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick (View v) {
+                //When Update button is clicked - transfers to update view
+                startActivity(new Intent(ChatActivity.this, UpdateContactsActivity.class));
+            }
+        });
+
+
 
         dbHandler = new DBHandler(this);
         user = dbHandler.getUser(1);
