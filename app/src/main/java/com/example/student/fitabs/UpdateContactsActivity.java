@@ -35,18 +35,24 @@ public class UpdateContactsActivity extends AppCompatActivity {
             toast.show();
         }
         else {
-            dbHandler.deleteContact(ContactsActivity.selectedContactNumber);
             user.setName(username.getText().toString());
             user.setTelnumber(telNumber.getText().toString());
-            dbHandler.updateChatMessages(ContactsActivity.selectedContactNumber, user.getTelnumber());
-            dbHandler.addContacts(user);
-            ContactsActivity.selectedContactName = user.getName();
-            ContactsActivity.selectedContactNumber = user.getTelnumber();
-
-            username.setText("");
-            telNumber.setText("");
-            dbHandler.close();
-            cancelUpdate(view);
+            if (!user.getTelnumber().equals(dbHandler.getContact(telNumber.getText().toString()).getTelnumber())){
+                dbHandler.deleteContact(ContactsActivity.selectedContactNumber);
+                dbHandler.updateChatMessages(ContactsActivity.selectedContactNumber, user.getTelnumber());
+                dbHandler.addContacts(user);
+                ContactsActivity.selectedContactName = user.getName();
+                ContactsActivity.selectedContactNumber = user.getTelnumber();
+                username.setText("");
+                telNumber.setText("");
+                dbHandler.close();
+                cancelUpdate(view);
+            }
+            else {
+                Toast toast = Toast.makeText(getApplicationContext(), "Contact already exist", Toast.LENGTH_LONG);
+                toast.show();
+                dbHandler.close();
+            }
         }
     }
 

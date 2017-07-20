@@ -19,20 +19,21 @@ import java.util.Calendar;
 import static com.example.student.fitabs.R.id.calendarView;
 
 public class MyCalendarActivity extends AppCompatActivity implements View.OnClickListener{
-    CalendarView _Calendar = null;
-    Button _ButtonSave = null;
-    EditText _EditText = null;
+    CalendarView _Calendar;
+    Button _ButtonSave;
+    EditText _EditText;
 
-    Day  _SelectedDay = null;
+    Day  _SelectedDay;
 
-    ArrayList<Day> _Schedule = new ArrayList<>();
-    DBHandler dbHandler = new DBHandler(this);
+    ArrayList<Day> _Schedule;
+    DBHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Load previous entries
+        dbHandler = new DBHandler(this);
         _Schedule = dbHandler.getAllEvents();
 
         //Setup widgets for easier access
@@ -136,10 +137,6 @@ public class MyCalendarActivity extends AppCompatActivity implements View.OnClic
             _SelectedDay.setMessage(_EditText.getText().toString());
             _Schedule.add(_SelectedDay);
         }
-
-        //Save serialized object
-        FileHandler fh = new FileHandler();
-        fh.serializeObject(_Schedule);
     }
 
     /**

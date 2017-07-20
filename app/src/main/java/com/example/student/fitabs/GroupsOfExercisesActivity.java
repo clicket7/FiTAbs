@@ -3,8 +3,6 @@ package com.example.student.fitabs;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -15,16 +13,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Created by student on 17.18.7.
- */
 
 public class GroupsOfExercisesActivity extends AppCompatActivity {
-    private ListView listView;
     private ArrayList<String> groups;
     private DBHandler dbHandler;
     static public String selectedOption;
@@ -36,7 +27,7 @@ public class GroupsOfExercisesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_groups_of_exercises);
 
         dbHandler = new DBHandler(this);
-        listView = (ListView) findViewById(R.id.exerciseList);
+        ListView listView = (ListView) findViewById(R.id.exerciseList);
         groups = new ArrayList<>();
         readFromDatabase();
         //Define bottom navigation view (thats why design library in gradle was imported)
@@ -123,7 +114,7 @@ public class GroupsOfExercisesActivity extends AppCompatActivity {
         }
 
         SQLiteDatabase database = dbHandler.getReadableDatabase();
-        String selectQuery = "SELECT DISTINCT " + dbHandler.KEY_EX_TYPE + " FROM " + dbHandler.TABLE_EXERCISES;
+        String selectQuery = "SELECT DISTINCT " + DBHandler.KEY_EX_TYPE + " FROM " + DBHandler.TABLE_EXERCISES;
         Cursor c = database.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c.moveToFirst()) {

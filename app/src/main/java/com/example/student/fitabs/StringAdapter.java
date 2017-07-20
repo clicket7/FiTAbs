@@ -12,12 +12,6 @@ import java.util.ArrayList;
 
 
 public class StringAdapter extends ArrayAdapter<String> {
-    /**
-     * Create a new {@link StringAdapter} object.
-     *
-     * @param context is the current context (i.e. Activity) that the adapter is being created in.
-     * @param menu   is the list of contacts to be displayed.
-     */
 
     public StringAdapter(Context context, ArrayList<String> menu) {
         super(context, 0, menu);

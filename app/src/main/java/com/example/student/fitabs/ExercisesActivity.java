@@ -15,7 +15,6 @@ import java.util.ArrayList;
 
 public class ExercisesActivity extends AppCompatActivity {
     private ArrayList<String> exercises;
-    private ListView listExercises;
     private DBHandler dbHandler;
     static public String selectedExercise;
 
@@ -27,7 +26,7 @@ public class ExercisesActivity extends AppCompatActivity {
         TextView label = (TextView) findViewById(R.id.groupName);
         label.setText(GroupsOfExercisesActivity.selectedOption);
         exercises = new ArrayList<>();
-        listExercises = (ListView) findViewById(R.id.exercises);
+        ListView listExercises = (ListView) findViewById(R.id.exercises);
         dbHandler = new DBHandler(this);
         readFromDatabase();
 
@@ -65,7 +64,7 @@ public class ExercisesActivity extends AppCompatActivity {
 
     public void readFromDatabase() {
         SQLiteDatabase database = dbHandler.getReadableDatabase();
-        Cursor cursor = database.query(dbHandler.TABLE_EXERCISES, new String[]{dbHandler.KEY_EX_NAME}, dbHandler.KEY_EX_TYPE + "=?",
+        Cursor cursor = database.query(DBHandler.TABLE_EXERCISES, new String[]{DBHandler.KEY_EX_NAME}, DBHandler.KEY_EX_TYPE + "=?",
                 new String[]{GroupsOfExercisesActivity.selectedOption}, null, null, null, null);
 
         if (cursor.moveToFirst()) {

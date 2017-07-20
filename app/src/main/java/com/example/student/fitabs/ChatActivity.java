@@ -41,7 +41,7 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         setContentView(R.layout.activity_chat); // initialization of variables and creating activity view
 
         dbHandler = new DBHandler(this);
-        user = dbHandler.getUser(1);
+        user = dbHandler.getUser();
         host = dbHandler.getIP();
 
         chatMessages = dbHandler.getAllChatMessages(ContactsActivity.selectedContactNumber);
@@ -121,7 +121,7 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
 
     public void sendMsg(View view) {
         dbHandler = new DBHandler(this);
-        user = dbHandler.getUser(1);
+        user = dbHandler.getUser();
         String msg = editMessage.getText().toString();
         chatMessages.add(user.getName() + ": " + msg);
         mAdapter.notifyDataSetChanged();
