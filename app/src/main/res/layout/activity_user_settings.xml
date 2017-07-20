@@ -182,7 +182,7 @@
         android:id="@+id/IPView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change username"
+        android:text="Server IP Address"
         tools:layout_constraintTop_creator="1"
         app:layout_constraintTop_toBottomOf="@+id/textIP"
         tools:layout_constraintLeft_creator="1"
