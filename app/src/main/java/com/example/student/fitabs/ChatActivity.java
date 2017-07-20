@@ -101,7 +101,7 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         delete.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick (View v) {
-                dbHandler.deleteContact(selectedContactName);
+                dbHandler.deleteContact(selectedContactNumber);
                 startActivity(new Intent(ChatActivity.this, ContactsActivity.class));
             }
         });
