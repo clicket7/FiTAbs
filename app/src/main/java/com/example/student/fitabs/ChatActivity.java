@@ -156,10 +156,11 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
        ArrayList<ChatMessage > msg;
         String m;
         msg = (ArrayList<ChatMessage>)dbHandler.getAllChatMessages(selectedContactNumber);
-        for (int iter = 0; iter > msg.size() + 1 ; iter++) {
+        for (int iter = 0; iter < msg.size(); iter++) {
            ChatMessage selectedMsg =  msg.get(iter);
             m = selectedMsg.getMessage().toString();
-            chatMessages.set(iter, m);
+            chatMessages.add(m);
+            mAdapter.notifyDataSetChanged();
         }
     }
 

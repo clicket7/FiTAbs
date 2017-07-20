@@ -206,7 +206,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         int length = msg.size();
         int i = 0;
-        while (i > length + 1) {
+        while (i < length) {
             //map user values with table’s column using ContentValues object
             ContentValues values = new ContentValues();
             values.put(KEY_CM_CONTACT_NUMBER, number);
@@ -292,7 +292,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public List<ChatMessage> getAllChatMessages(String number) {
         List<ChatMessage> msgList = new ArrayList<>();
         // Select All Query
-        String selectQuery = "SELECT * FROM " + TABLE_CHAT_MESSAGE + "WHERE telephoneNumber = ?" + number;
+        String selectQuery = "SELECT * FROM " + TABLE_CHAT_MESSAGE; // + "WHERE telephoneNumber = ?" + number;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
         // looping through all rows and adding to list
