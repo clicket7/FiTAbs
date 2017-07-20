@@ -21,7 +21,8 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:fontFamily="serif"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/black"/>
 
     <ImageView
         android:id="@+id/imageExercise"
@@ -30,7 +31,8 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/exerciseName"
         app:srcCompat="@mipmap/ic_launcher"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp" />
 
     <TextView
         android:id="@+id/textDescription"
@@ -41,5 +43,8 @@
         android:layout_below="@+id/imageExercise"
         android:layout_centerHorizontal="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="15dp"
+        android:gravity="center_horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
 </RelativeLayout>
