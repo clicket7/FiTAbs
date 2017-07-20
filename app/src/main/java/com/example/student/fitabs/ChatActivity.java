@@ -1,6 +1,7 @@
 package com.example.student.fitabs;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -71,7 +72,6 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         chatWindow = (ListView) findViewById(R.id.chat);
 
         mAdapter = new ClientListAdapter(this, chatMessages);
-        chatWindow.setAdapter(mAdapter);
 
         //Define bottom navigation view (thats why design library in gradle was imported)
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
