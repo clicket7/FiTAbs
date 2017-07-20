@@ -122,8 +122,9 @@ public class GroupsOfExercisesActivity extends AppCompatActivity {
             dbHandler.addExercise("Abs", "Dead Bug", "Begin lying on your back with your hands extended above you toward the ceiling. Bring your feet, knees, and hips up to 90 degrees.", "deadbug");
         }
 
+        SQLiteDatabase database = dbHandler.getReadableDatabase();
         String selectQuery = "SELECT DISTINCT " + dbHandler.KEY_EX_TYPE + " FROM " + dbHandler.TABLE_EXERCISES;
-        Cursor c = db.rawQuery(selectQuery, null);
+        Cursor c = database.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
             do {
@@ -133,7 +134,8 @@ public class GroupsOfExercisesActivity extends AppCompatActivity {
 
         cursor.close();
         c.close();
-        dbHandler.close();
+        db.close();
+        database.close();
     }
 
 }
