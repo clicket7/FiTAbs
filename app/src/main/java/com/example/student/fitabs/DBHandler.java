@@ -9,9 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.type;
-import static android.R.id.message;
-
 /**
  * Created by Sandra Bogusha on 17.11.7.
  */
@@ -27,12 +24,18 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String TABLE_CONTACTS = "Contacts";
     public static final String TABLE_CHAT_MESSAGE = "ChatMessage";
     public static final String TABLE_EXERCISES = "Exercises";
+    public static final String TABLE_IP = "IP";
+    public static final String TABLE_EVENTS = "Events";
 
     // USer Table Columns names
     public static final String KEY_ID = "ID";
     public static final String KEY_USERNAME = "Username";
     public static final String KEY_TEL_NUMBER = "TelephoneNumber";
     public static final String KEY_IS_TRENER = "IsTrener";
+
+    // IP Table Columns names
+    public static final String KEY_IP_ID = "ID";
+    public static final String KEY_IP = "IP";
 
     // Contacts Table Columns names
     public static final String KEY_C_ID = "ID";
@@ -52,6 +55,11 @@ public class DBHandler extends SQLiteOpenHelper {
     public static final String KEY_EX_DESCRIPTION = "ExerciseDescription";
     public static final String KEY_EX_IMAGE= "Image";
 
+    //Events Table names
+    public static final String KEY_E_ID = "ID";
+    public static final String KEY_E_DATE = "Date";
+    public static final String KEY_E_EVENT = "Event";
+
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -62,6 +70,10 @@ public class DBHandler extends SQLiteOpenHelper {
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_USERNAME + " TEXT, "
                 + KEY_TEL_NUMBER + " TEXT, " + KEY_IS_TRENER + " TEXT" + ")";
         db.execSQL(CREATE_USERS_TABLE);
+
+        String CREATE_IP_TABLE = "CREATE TABLE " + TABLE_IP + "("
+                + KEY_IP_ID + " INTEGER PRIMARY KEY," + KEY_IP + " TEXT)";
+        db.execSQL(CREATE_IP_TABLE);
 
         String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_CONTACTS + "("
                 + KEY_C_ID + " INTEGER PRIMARY KEY," + KEY_C_USERNAME + " TEXT, "
@@ -75,8 +87,13 @@ public class DBHandler extends SQLiteOpenHelper {
 
         String CREATE_EXERCISE_TABLE = "CREATE TABLE " + TABLE_EXERCISES + "("
                 + KEY_EX_ID + " INTEGER PRIMARY KEY," + KEY_EX_TYPE + " TEXT, "
-                + KEY_EX_NAME + " TEXT, " + KEY_EX_DESCRIPTION + " TEXT, " + KEY_EX_IMAGE + " TEXT" + ")";
+                + KEY_EX_NAME + " TEXT, " + KEY_EX_DESCRIPTION + " TEXT, " + KEY_EX_IMAGE + " BLOB" + ")";
         db.execSQL(CREATE_EXERCISE_TABLE);
+
+        String CREATE_EVENTS_TABLE = "CREATE TABLE " + TABLE_EVENTS + "("
+                + KEY_E_ID + " INTEGER PRIMARY KEY," + KEY_E_DATE + " TEXT, "
+                + KEY_E_EVENT + " TEXT " + ")";
+        db.execSQL(CREATE_EVENTS_TABLE);
     }
 
     @Override
@@ -86,6 +103,8 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONTACTS);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CHAT_MESSAGE);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EXERCISES);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_IP);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
         // Creating tables again
         onCreate(db);
     }
@@ -101,6 +120,71 @@ public class DBHandler extends SQLiteOpenHelper {
         // Inserting Row
         db.insert(TABLE_USER, null, values);
         db.close(); // Closing database connection
+    }
+    public void addEvent(String event, Day day) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_E_EVENT, event);
+        values.put(KEY_E_DATE, day.getDay() + "/" + day.getMonth() + "/" + day.getYear());
+        db.insert(TABLE_EVENTS, null, values);
+        db.close();
+    }
+
+    public void addExercise(String type, String name, String description, byte[] image) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_EX_TYPE, type);
+        values.put(KEY_EX_NAME, name);
+        values.put(KEY_EX_DESCRIPTION, description);
+        values.put(KEY_EX_IMAGE, image);
+        db.insert(TABLE_EXERCISES, null, values);
+        db.close();
+    }
+
+    public String getEvent(Day day) {
+        String event = "";
+        String date = day.getDay() + "/" + day.getMonth() + "/" + day.getYear();
+        String selectQuery = "SELECT " + KEY_E_EVENT +  " FROM " + TABLE_EVENTS + " WHERE " + KEY_E_EVENT + "= '" + date + "'";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) event = cursor.getString(0);
+        cursor.close();
+        db.close();
+        return event;
+    }
+    public int updateEvent(String event) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_E_EVENT, event);
+        // updating row
+        return db.update(TABLE_EVENTS, values, KEY_E_EVENT + " = ?",
+                new String[]{event});
+    }
+
+    public void addIP(String ip) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        //map user values with table’s column using ContentValues object
+        ContentValues values = new ContentValues();
+        values.put(KEY_IP, ip);
+        db.insert(TABLE_IP, null, values);
+        db.close();
+    }
+
+    public String getIP() {
+        String ip = "";
+        String selectQuery = "SELECT * FROM " + TABLE_IP;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) ip = cursor.getString(1);
+        cursor.close();
+        db.close();
+        return ip;
+    }
+
+    public void deleteIP() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_IP, null, null);
+        db.close();
     }
 
     //  INSERT : Adding new contacts
@@ -289,7 +373,7 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_C_TEL_NUMBER, user.getTelnumber());
         values.put(KEY_C_IS_TRENER, user.getStatus());
         // updating row
-        return db.update(TABLE_CONTACTS, values, KEY_ID + " = ?",
+        return db.update(TABLE_CONTACTS, values, KEY_C_ID + " = ?",
                 new String[]{String.valueOf(user.getId())});
     }
 
@@ -301,9 +385,9 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // DELETE: Deleting a cotact by contact name
-    public void deleteContact(String contactName) {
+    public void deleteContact(String telNumber) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CONTACTS, "username = ?", new String[]{contactName});
+        db.delete(TABLE_CONTACTS, "TelephoneNumber = ?", new String[]{telNumber});
         db.close();
     }
 

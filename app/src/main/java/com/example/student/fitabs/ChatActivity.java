@@ -43,7 +43,7 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
     private ClientListAdapter mAdapter;
 
     private static int port = 9999;
-    private String host = "192.168.8.117";
+    private String host;
     static private Socket socket;
     private BufferedReader in;
     static private DataOutputStream os;
@@ -51,7 +51,7 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
 
     DBHandler dbHandler;
     User user;
-    Button delete;
+    Button delete, update;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +80,7 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     //Contacts
-                    case R.id.action_contacts:
+                    case R.id.action_back:
                         startActivity(new Intent(ChatActivity.this, ContactsActivity.class));
                         break;
                     //Exercise
@@ -105,13 +105,27 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         delete.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick (View v) {
-                dbHandler.deleteContact(selectedContactName);
+                dbHandler.deleteContact(selectedContactNumber);
                 startActivity(new Intent(ChatActivity.this, ContactsActivity.class));
             }
         });
 
+
+        //Update contacts information
+        update = (Button) findViewById(R.id.editButton);
+        update.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick (View v) {
+                //When Update button is clicked - transfers to update view
+                startActivity(new Intent(ChatActivity.this, UpdateContactsActivity.class));
+            }
+        });
+
+
+
         dbHandler = new DBHandler(this);
         user = dbHandler.getUser(1);
+        host = dbHandler.getIP();
 
         t = new Thread(this);
         t.start();

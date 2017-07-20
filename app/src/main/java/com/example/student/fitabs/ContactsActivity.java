@@ -27,10 +27,7 @@ public class ContactsActivity extends AppCompatActivity {
     private ArrayList<User> contacts;
     DBHandler dbHandler;
     ArrayList<Integer> id;
-    ArrayList<String> usernames = new ArrayList<>();
-    ArrayList<String> telNumber = new ArrayList<>();
     ListView listContacts;
-    ArrayList<Boolean> isTrener = new ArrayList<>();
     static public String selectedContactName;
     static public String selectedContactNumber;
     User selectedContact = new User();
@@ -118,16 +115,12 @@ public class ContactsActivity extends AppCompatActivity {
         Cursor cursor = database.query(DBHandler.TABLE_CONTACTS,
                 null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
-            int usernameIndex = cursor.getColumnIndex(dbHandler.KEY_C_USERNAME);
-            int telNumberIndex = cursor.getColumnIndex(dbHandler.KEY_C_TEL_NUMBER);
-            int statusIndex = cursor.getColumnIndex(dbHandler.KEY_C_IS_TRENER);
-            do {
-                contacts.add(new User(cursor.getString(usernameIndex), cursor.getString(telNumberIndex), cursor.getInt(statusIndex) > 0));
-            } while (cursor.moveToNext());
+            contacts = (ArrayList<User>) dbHandler.getAllContacts();
         } else {
             Toast toast = Toast.makeText(getApplicationContext(), "Table is empty", Toast.LENGTH_LONG);
             toast.show();
         }
+        cursor.close();
         dbHandler.close();
     }
 
