@@ -24,7 +24,8 @@
         android:text="Exercises"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black"/>
 
     <ListView
         android:id="@+id/exerciseList"

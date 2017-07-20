@@ -13,7 +13,8 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:fontFamily="serif"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@color/black"/>
     <LinearLayout
         android:id="@+id/linear"
         android:layout_width="fill_parent"

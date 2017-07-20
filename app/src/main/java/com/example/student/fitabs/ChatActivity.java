@@ -67,7 +67,6 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
 
         nameTo = (TextView) findViewById(R.id.contact);
         nameTo.setText(ContactsActivity.selectedContactName);
-        nameTo.setTextColor(Color.RED);
 
         editMessage = (EditText) findViewById(R.id.editMessage);
         chatWindow = (ListView) findViewById(R.id.chat);
