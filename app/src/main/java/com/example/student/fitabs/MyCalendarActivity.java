@@ -41,7 +41,7 @@ public class MyCalendarActivity extends AppCompatActivity implements View.OnClic
         _EditText = (EditText) this.findViewById(R.id.editText);
         _SelectedDay = new Day(Calendar.getInstance().get(Calendar.YEAR),
                 Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-
+        selectedDateChanged(_Calendar, _SelectedDay.getYear(), _SelectedDay.getMonth(), _SelectedDay.getDay());
 
         //Set up button
         _ButtonSave.setText(R.string.btn_edit);
