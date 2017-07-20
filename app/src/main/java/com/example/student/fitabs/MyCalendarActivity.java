@@ -26,14 +26,14 @@ public class MyCalendarActivity extends AppCompatActivity implements View.OnClic
     Day  _SelectedDay = null;
 
     ArrayList<Day> _Schedule = new ArrayList<>();
+    DBHandler dbHandler = new DBHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //Load previous entries
-        FileHandler fh = new FileHandler();
-        _Schedule = fh.deserializeObject();
+        _Schedule = dbHandler.getAllEvents();
 
         //Setup widgets for easier access
         _Calendar = (CalendarView) this.findViewById(calendarView);
@@ -68,6 +68,7 @@ public class MyCalendarActivity extends AppCompatActivity implements View.OnClic
             //Selected icon(item) - changes to the appropriate view
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                dbHandler.saveAllEvents(_Schedule);
                 switch (item.getItemId())
                 {
                     //Contacts

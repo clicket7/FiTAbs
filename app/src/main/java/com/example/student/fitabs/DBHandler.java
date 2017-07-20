@@ -403,4 +403,42 @@ public class DBHandler extends SQLiteOpenHelper {
         db.delete(TABLE_CONTACTS, "phoneNumber = ?", new String[]{number});
         db.close();
     }
+
+    public void deleteAllEvents() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_EVENTS, null, null);
+        db.close();
+    }
+
+    public void saveAllEvents(ArrayList<Day> list) {
+        deleteAllEvents();
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        for (Day day:list) {
+            ContentValues values = new ContentValues();
+            values.put(KEY_E_DATE, day.getDay()+"/"+day.getMonth()+"/"+day.getYear());
+            values.put(KEY_E_EVENT, day.getMessage());
+            db.insert(TABLE_EVENTS, null, values);
+        }
+        db.close();
+    }
+
+    public ArrayList<Day> getAllEvents() {
+        String selectQuery = "SELECT * FROM " + TABLE_EVENTS;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        ArrayList<Day> list = new ArrayList<>();
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                String[] date = cursor.getString(1).split("/");
+                Day day = new Day(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0]));
+                day.setMessage(cursor.getString(2));
+                // Adding contact to list
+                list.add(day);
+            } while (cursor.moveToNext());
+        }
+        // return contact list
+        return list;
+    }
 }
