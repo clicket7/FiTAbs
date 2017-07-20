@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,13 +88,15 @@ public class DBHandler extends SQLiteOpenHelper {
 
         String CREATE_EXERCISE_TABLE = "CREATE TABLE " + TABLE_EXERCISES + "("
                 + KEY_EX_ID + " INTEGER PRIMARY KEY," + KEY_EX_TYPE + " TEXT, "
-                + KEY_EX_NAME + " TEXT, " + KEY_EX_DESCRIPTION + " TEXT, " + KEY_EX_IMAGE + " BLOB" + ")";
+                + KEY_EX_NAME + " TEXT, " + KEY_EX_DESCRIPTION + " TEXT, " + KEY_EX_IMAGE + " TEXT" + ")";
         db.execSQL(CREATE_EXERCISE_TABLE);
 
         String CREATE_EVENTS_TABLE = "CREATE TABLE " + TABLE_EVENTS + "("
                 + KEY_E_ID + " INTEGER PRIMARY KEY," + KEY_E_DATE + " TEXT, "
                 + KEY_E_EVENT + " TEXT " + ")";
         db.execSQL(CREATE_EVENTS_TABLE);
+
+
     }
 
     @Override
@@ -130,7 +133,7 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void addExercise(String type, String name, String description, byte[] image) {
+    public void addExercise(String type, String name, String description, String image) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_EX_TYPE, type);
@@ -329,7 +332,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public ArrayList<Exercises> getExercisesByType(String type) {
         ArrayList<Exercises> exerList = new ArrayList<>();
         // Select All Query
-        String selectQuery = "SELECT * FROM " + TABLE_EXERCISES+ "WHERE exerciseType = ?" + type;
+        String selectQuery = "SELECT * FROM " + TABLE_EXERCISES+ " WHERE exerciseType = ?" + type;
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
@@ -346,6 +349,30 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         // return contact list
         return exerList;
+    }
+
+    public String getExerciseDescription(String name) {
+        String d = "Nothing";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_EXERCISES, new String[]{KEY_EX_DESCRIPTION}, KEY_EX_NAME + "=?",
+                new String[]{name}, null, null, null, null);
+        if (cursor.moveToFirst())
+            do {
+                d = cursor.getString(0);
+        } while (cursor.moveToNext());
+        return d;
+    }
+
+    public String getExerciseImage(String name) {
+        String image = "";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_EXERCISES, new String[]{KEY_EX_IMAGE}, KEY_EX_NAME + "=?",
+                new String[]{name}, null, null, null, null);
+        if (cursor.moveToFirst())
+            do {
+                image = cursor.getString(0);
+            } while (cursor.moveToNext());
+        return image;
     }
 
     // To get total numbers of user records in database write getUsersCount
