@@ -292,7 +292,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public List<ChatMessage> getAllChatMessages(String number) {
         List<ChatMessage> msgList = new ArrayList<>();
         // Select All Query
-        String selectQuery = "SELECT * FROM " + TABLE_CHAT_MESSAGE; // + "WHERE telephoneNumber = ?" + number;
+        String selectQuery = "SELECT * FROM " + TABLE_CHAT_MESSAGE + " WHERE " + KEY_CM_CONTACT_NUMBER + "= '" + number + "'";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
         // looping through all rows and adding to list
