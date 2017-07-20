@@ -295,24 +295,34 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // READ: Getting  ChatMessages by telephoneNumber
-    public List<ChatMessage> getAllChatMessages(String number) {
-        List<ChatMessage> msgList = new ArrayList<>();
+    public ArrayList<String> getAllChatMessages(String number) {
+        ArrayList<String> msgList = new ArrayList<>();
         // Select All Query
-        String selectQuery = "SELECT * FROM " + TABLE_CHAT_MESSAGE + " WHERE " + KEY_CM_CONTACT_NUMBER + "= '" + number + "'";
-        SQLiteDatabase db = this.getWritableDatabase();
+        String selectQuery = "SELECT " + KEY_CM_MSG + " FROM " + TABLE_CHAT_MESSAGE + " WHERE " + KEY_CM_CONTACT_NUMBER + "= '" + number + "'";
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery,null);
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
-            do {ChatMessage message = new ChatMessage();
-                message.setId(Integer.parseInt(cursor.getString(0)));
-                message.setPhoneNumber(cursor.getString(1));
-                message.setMessage(cursor.getString(2));
-                // Adding contact to list
+            do {
+                String message = cursor.getString(0);
                 msgList.add(message);
             } while (cursor.moveToNext());
         }
         // return contact list
         return msgList;
+    }
+
+    public void saveAllChatMessages(ArrayList<String> list, String number) {
+        deleteChatMessages(number);
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        for (String str:list) {
+            ContentValues values = new ContentValues();
+            values.put(KEY_CM_MSG, str);
+            values.put(KEY_CM_CONTACT_NUMBER, number);
+            db.insert(TABLE_CHAT_MESSAGE, null, values);
+        }
+        db.close();
     }
 
     // READ: Getting All Exercises by type
@@ -400,7 +410,7 @@ public class DBHandler extends SQLiteOpenHelper {
     // DELETE: Deleting a ChatMessage by phoneNUmber
     public void deleteChatMessages(String number) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_CONTACTS, "phoneNumber = ?", new String[]{number});
+        db.delete(TABLE_CHAT_MESSAGE, KEY_CM_CONTACT_NUMBER + " = ?", new String[]{number});
         db.close();
     }
 

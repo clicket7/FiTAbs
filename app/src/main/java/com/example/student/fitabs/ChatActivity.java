@@ -35,7 +35,7 @@ import static com.example.student.fitabs.ContactsActivity.selectedContactNumber;
  */
 
 public class ChatActivity extends AppCompatActivity implements Runnable {
-    public ArrayList<String> chatMessages = new ArrayList<String>();
+    public ArrayList<String> chatMessages;
     private TextView nameTo;
     private ListView chatWindow;
     private EditText editMessage;
@@ -58,6 +58,12 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat); // initialization of variables and creating activity view
 
+        dbHandler = new DBHandler(this);
+        user = dbHandler.getUser(1);
+        host = dbHandler.getIP();
+
+        chatMessages = dbHandler.getAllChatMessages(ContactsActivity.selectedContactNumber);
+
         nameTo = (TextView) findViewById(R.id.contact);
         nameTo.setText(ContactsActivity.selectedContactName);
 
@@ -66,8 +72,6 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
 
         mAdapter = new ClientListAdapter(this, chatMessages);
         chatWindow.setAdapter(mAdapter);
-
-        readMsg();
 
         //Define bottom navigation view (thats why design library in gradle was imported)
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -78,6 +82,7 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
             //Selected icon(item) - changes to the appropriate view
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                dbHandler.saveAllChatMessages(chatMessages, ContactsActivity.selectedContactNumber);
                 switch (item.getItemId()) {
                     //Contacts
                     case R.id.action_back:
@@ -105,7 +110,8 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         delete.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick (View v) {
-                dbHandler.deleteContact(selectedContactNumber);
+                dbHandler.deleteChatMessages(ContactsActivity.selectedContactNumber);
+                dbHandler.deleteContact(ContactsActivity.selectedContactNumber);
                 startActivity(new Intent(ChatActivity.this, ContactsActivity.class));
             }
         });
@@ -116,16 +122,11 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         update.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick (View v) {
+                dbHandler.saveAllChatMessages(chatMessages, ContactsActivity.selectedContactNumber);
                 //When Update button is clicked - transfers to update view
                 startActivity(new Intent(ChatActivity.this, UpdateContactsActivity.class));
             }
         });
-
-
-
-        dbHandler = new DBHandler(this);
-        user = dbHandler.getUser(1);
-        host = dbHandler.getIP();
 
         t = new Thread(this);
         t.start();
@@ -149,19 +150,6 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         editMessage.setText("");
         dbHandler.close();
 
-    }
-
-    public void readMsg(){
-        dbHandler = new DBHandler(this);
-       ArrayList<ChatMessage > msg;
-        String m;
-        msg = (ArrayList<ChatMessage>)dbHandler.getAllChatMessages(selectedContactNumber);
-        for (int iter = 0; iter < msg.size(); iter++) {
-           ChatMessage selectedMsg =  msg.get(iter);
-            m = selectedMsg.getMessage().toString();
-            chatMessages.add(m);
-            mAdapter.notifyDataSetChanged();
-        }
     }
 
     @Override
@@ -214,10 +202,5 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
 
             return new Long(1);
         }
-    }
-
-    public void backToContacts(View view) {
-        Intent intent = new Intent(ChatActivity.this, ContactsActivity.class);
-        startActivity(intent);
     }
 }
