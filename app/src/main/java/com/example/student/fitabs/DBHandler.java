@@ -6,20 +6,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by Sandra Bogusha on 17.11.7.
- */
 
 public class DBHandler extends SQLiteOpenHelper {
 
     // Database Version
-    public static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 1;
     // Database Name
-    public static final String DATABASE_NAME = "userInfo";
+    private static final String DATABASE_NAME = "userInfo";
     // Contacts table name
     public static final String TABLE_USER = "User";
     public static final String TABLE_CONTACTS = "Contacts";
@@ -124,14 +119,6 @@ public class DBHandler extends SQLiteOpenHelper {
         db.insert(TABLE_USER, null, values);
         db.close(); // Closing database connection
     }
-    public void addEvent(String event, Day day) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(KEY_E_EVENT, event);
-        values.put(KEY_E_DATE, day.getDay() + "/" + day.getMonth() + "/" + day.getYear());
-        db.insert(TABLE_EVENTS, null, values);
-        db.close();
-    }
 
     public void addExercise(String type, String name, String description, String image) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -142,32 +129,6 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_EX_IMAGE, image);
         db.insert(TABLE_EXERCISES, null, values);
         db.close();
-    }
-
-    public void deleteAllExercises() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_EXERCISES, null, null);
-        db.close();
-    }
-
-    public String getEvent(Day day) {
-        String event = "";
-        String date = day.getDay() + "/" + day.getMonth() + "/" + day.getYear();
-        String selectQuery = "SELECT " + KEY_E_EVENT +  " FROM " + TABLE_EVENTS + " WHERE " + KEY_E_EVENT + "= '" + date + "'";
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.moveToFirst()) event = cursor.getString(0);
-        cursor.close();
-        db.close();
-        return event;
-    }
-    public int updateEvent(String event) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(KEY_E_EVENT, event);
-        // updating row
-        return db.update(TABLE_EVENTS, values, KEY_E_EVENT + " = ?",
-                new String[]{event});
     }
 
     public void addIP(String ip) {
@@ -209,69 +170,33 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close(); // Closing database connection
     }
 
-    //  INSERT : Adding new ChatMessages
-    public void addChatMessages(ArrayList<String> msg, String number) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        int length = msg.size();
-        int i = 0;
-        while (i < length) {
-            //map user values with table’s column using ContentValues object
-            ContentValues values = new ContentValues();
-            values.put(KEY_CM_CONTACT_NUMBER, number);
-            values.put(KEY_CM_MSG, msg.get(i).toString());
-            // Inserting Row
-            db.insert(TABLE_CHAT_MESSAGE, null, values);
-            i++;
-        }
-        db.close(); // Closing database connection
-    }
-
     // READ: Getting one user
-    public User getUser(int id) {
+    public User getUser() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_USER, new String[]{KEY_ID,
-                        KEY_USERNAME, KEY_TEL_NUMBER, KEY_IS_TRENER}, KEY_ID + "=?",
-                new String[]{String.valueOf(id)}, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
-        User contact = new User(cursor.getString(1), cursor.getString(2), cursor.getInt(3) > 0);
+        User contact;
+        String query = "SELECT * FROM " + TABLE_USER;
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst())
+            contact = new User(cursor.getString(1), cursor.getString(2), cursor.getInt(3) > 0);
+        else contact = new User();
+
+        cursor.close();
+        db.close();
         return contact;
     }
 
     // READ: Getting one contact
     public User getContact(String telNumber) {
         SQLiteDatabase db = this.getReadableDatabase();
+        User contact;
         Cursor cursor = db.query(TABLE_CONTACTS, new String[]{KEY_C_ID,
                         KEY_C_USERNAME, KEY_C_TEL_NUMBER, KEY_C_IS_TRENER}, KEY_C_TEL_NUMBER + "=?",
                 new String[]{String.valueOf(telNumber)}, null, null, null, null);
-        if (cursor != null)
-            cursor.moveToFirst();
-        User contact = new User(cursor.getString(1), cursor.getString(2), cursor.getInt(3) > 0);
+        if (cursor.moveToFirst()) contact = new User(cursor.getString(1), cursor.getString(2), cursor.getInt(3) > 0);
+        else contact = new User();
+        cursor.close();
+        db.close();
         return contact;
-    }
-
-    // READ: Getting All Users
-    public List<User> getAllUsers() {
-        List<User> userList = new ArrayList<User>();
-        // Select All Query
-        String selectQuery = "SELECT * FROM " + TABLE_USER;
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                User user = new User();
-                user.setId(Integer.parseInt(cursor.getString(0)));
-                user.setName(cursor.getString(1));
-                user.setTelnumber(cursor.getString(2));
-                user.setStatus(cursor.getInt(3) > 0);
-                // Adding contact to list
-                userList.add(user);
-            } while (cursor.moveToNext());
-        }
-        // return contact list
-        return userList;
     }
 
     // READ: Getting All Contacts
@@ -293,6 +218,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 contactList.add(user);
             } while (cursor.moveToNext());
         }
+
+        cursor.close();
+        db.close();
         // return contact list
         return contactList;
     }
@@ -311,6 +239,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 msgList.add(message);
             } while (cursor.moveToNext());
         }
+
+        cursor.close();
+        db.close();
         // return contact list
         return msgList;
     }
@@ -326,29 +257,6 @@ public class DBHandler extends SQLiteOpenHelper {
             db.insert(TABLE_CHAT_MESSAGE, null, values);
         }
         db.close();
-    }
-
-    // READ: Getting All Exercises by type
-    public ArrayList<Exercises> getExercisesByType(String type) {
-        ArrayList<Exercises> exerList = new ArrayList<>();
-        // Select All Query
-        String selectQuery = "SELECT * FROM " + TABLE_EXERCISES+ " WHERE exerciseType = ?" + type;
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do { Exercises exer = new Exercises();
-                exer.setId(Integer.parseInt(cursor.getString(0)));
-                exer.setType(cursor.getString(1));
-                exer.setExName(cursor.getString(2));
-                exer.setDescription(cursor.getString(3));
-                exer.setImage(cursor.getBlob(4));
-                // Adding contact to list
-                exerList.add(exer);
-            } while (cursor.moveToNext());
-        }
-        // return contact list
-        return exerList;
     }
 
     public String getExerciseDescription(String name) {
@@ -373,51 +281,6 @@ public class DBHandler extends SQLiteOpenHelper {
                 image = cursor.getString(0);
             } while (cursor.moveToNext());
         return image;
-    }
-
-    // To get total numbers of user records in database write getUsersCount
-    public int getUserCount() {
-        String countQuery = "SELECT * FROM " + TABLE_USER;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-        cursor.close();
-        // return count
-        return cursor.getCount();
-    }
-
-    // To get total numbers of user records in database write getUsersCount
-    public int getContactsCount() {
-        String countQuery = "SELECT * FROM " + TABLE_CONTACTS;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
-        cursor.close();
-        // return count
-        return cursor.getCount();
-    }
-
-
-    // UPDATE: Updating a user
-    public int updateUser(User user) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(KEY_USERNAME, user.getName());
-        values.put(KEY_TEL_NUMBER, user.getTelnumber());
-        values.put(KEY_IS_TRENER, user.getStatus());
-        // updating row
-        return db.update(TABLE_USER, values, KEY_ID + " = ?",
-                new String[]{String.valueOf(user.getId())});
-    }
-
-    // UPDATE: Updating a contact
-    public int updateContact(User user) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(KEY_C_USERNAME, user.getName());
-        values.put(KEY_C_TEL_NUMBER, user.getTelnumber());
-        values.put(KEY_C_IS_TRENER, user.getStatus());
-        // updating row
-        return db.update(TABLE_CONTACTS, values, KEY_C_ID + " = ?",
-                new String[]{String.valueOf(user.getId())});
     }
 
     public void updateChatMessages(String oldNumber, String newNumber) {
@@ -483,6 +346,9 @@ public class DBHandler extends SQLiteOpenHelper {
                 list.add(day);
             } while (cursor.moveToNext());
         }
+
+        cursor.close();
+        db.close();
         // return contact list
         return list;
     }

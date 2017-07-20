@@ -1,9 +1,6 @@
 package com.example.student.fitabs;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +19,7 @@ public class UserSettingsActivity extends AppCompatActivity {
     CheckBox checkStatus;
     DBHandler dbHandler;
     ArrayList<Integer> id = new ArrayList<>();
-    User user = new User();
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,40 +31,20 @@ public class UserSettingsActivity extends AppCompatActivity {
         checkStatus = (CheckBox) findViewById(R.id.checkBoxStatus);
         editIp = (EditText) findViewById(R.id.editIP);
 
-
         dbHandler = new DBHandler(this);
 
+        user = dbHandler.getUser();
         editUsername.setText(user.getName());
         editNumber.setText(user.getTelnumber());
         checkStatus.setChecked(user.getStatus());
 
-
-        //whole block loads previously entered data from database table TABLE_USER
-        SQLiteDatabase database = dbHandler.getReadableDatabase();
-        Cursor cursor = database.query(DBHandler.TABLE_USER,
-                null, null, null, null, null, null);
-        if (cursor.moveToFirst()) {
-            user = dbHandler.getUser(1);
-            editUsername.setText(user.getName());
-            editNumber.setText(user.getTelnumber());
-            checkStatus.setChecked(user.getStatus());
-
-        } else{
-            Toast toast = Toast.makeText(getApplicationContext(), "Table is empty", Toast.LENGTH_LONG);
+        if (user.getName().equals("") || user.getTelnumber().equals("")){
+            Toast toast = Toast.makeText(getApplicationContext(), "Need to set up settings", Toast.LENGTH_LONG);
             toast.show();
         }
 
-        database = dbHandler.getReadableDatabase();
-        cursor = database.query(DBHandler.TABLE_IP,
-                null, null, null, null, null, null);
-        if (cursor.moveToFirst()) {
-            editIp.setText(dbHandler.getIP());
+        editIp.setText(dbHandler.getIP());
 
-        } else{
-            editIp.setText("");
-        }
-
-        cursor.close();
         dbHandler.close();
 
         //Define bottom navigation view (thats why design library in gradle was imported)
@@ -123,27 +100,13 @@ public class UserSettingsActivity extends AppCompatActivity {
             user.setTelnumber(editNumber.getText().toString());
             user.setStatus(checkStatus.isChecked());
 
-            SQLiteDatabase database = dbHandler.getWritableDatabase();
-
-            ContentValues contentValues = new ContentValues();
-
-
-            contentValues.put(DBHandler.KEY_USERNAME, user.getName());
-            contentValues.put(DBHandler.KEY_TEL_NUMBER, user.getTelnumber());
-            contentValues.put(DBHandler.KEY_IS_TRENER, user.getStatus());
-
-            database.insert(DBHandler.TABLE_USER, null, contentValues);
-
-            contentValues = new ContentValues();
-            contentValues.put(DBHandler.KEY_IP, editIp.getText().toString());
-
-            database.insert(DBHandler.TABLE_IP, null, contentValues);
+            dbHandler.addUser(user);
+            dbHandler.addIP(editIp.getText().toString());
 
             Toast toast = Toast.makeText (getApplicationContext(), getString(R.string.saveSucc), Toast.LENGTH_LONG);
             toast.show();
 
             startActivity(new Intent(UserSettingsActivity.this, ContactsActivity.class));
-
         }
 
         dbHandler.close();
