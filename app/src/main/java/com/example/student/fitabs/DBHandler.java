@@ -87,7 +87,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         String CREATE_EXERCISE_TABLE = "CREATE TABLE " + TABLE_EXERCISES + "("
                 + KEY_EX_ID + " INTEGER PRIMARY KEY," + KEY_EX_TYPE + " TEXT, "
-                + KEY_EX_NAME + " TEXT, " + KEY_EX_DESCRIPTION + " TEXT, " + KEY_EX_IMAGE + " TEXT" + ")";
+                + KEY_EX_NAME + " TEXT, " + KEY_EX_DESCRIPTION + " TEXT, " + KEY_EX_IMAGE + " BLOB" + ")";
         db.execSQL(CREATE_EXERCISE_TABLE);
 
         String CREATE_EVENTS_TABLE = "CREATE TABLE " + TABLE_EVENTS + "("
@@ -127,6 +127,17 @@ public class DBHandler extends SQLiteOpenHelper {
         values.put(KEY_E_EVENT, event);
         values.put(KEY_E_DATE, day.getDay() + "/" + day.getMonth() + "/" + day.getYear());
         db.insert(TABLE_EVENTS, null, values);
+        db.close();
+    }
+
+    public void addExercise(String type, String name, String description, byte[] image) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_EX_TYPE, type);
+        values.put(KEY_EX_NAME, name);
+        values.put(KEY_EX_DESCRIPTION, description);
+        values.put(KEY_EX_IMAGE, image);
+        db.insert(TABLE_EXERCISES, null, values);
         db.close();
     }
 
