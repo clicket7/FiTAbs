@@ -38,6 +38,7 @@ public class UpdateContactsActivity extends AppCompatActivity {
             dbHandler.deleteContact(ContactsActivity.selectedContactNumber);
             user.setName(username.getText().toString());
             user.setTelnumber(telNumber.getText().toString());
+            dbHandler.updateChatMessages(ContactsActivity.selectedContactNumber, user.getTelnumber());
             dbHandler.addContacts(user);
             ContactsActivity.selectedContactName = user.getName();
             ContactsActivity.selectedContactNumber = user.getTelnumber();

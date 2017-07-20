@@ -72,6 +72,7 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
         chatWindow = (ListView) findViewById(R.id.chat);
 
         mAdapter = new ClientListAdapter(this, chatMessages);
+        chatWindow.setAdapter(mAdapter);
 
         //Define bottom navigation view (thats why design library in gradle was imported)
         BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -144,8 +145,6 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
 
         client = new Client();
         client.execute(host, user.getName() + ": " + msg);
-
-        dbHandler.addChatMessages(chatMessages,selectedContactNumber );
 
         editMessage.setText("");
         dbHandler.close();

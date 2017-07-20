@@ -420,6 +420,14 @@ public class DBHandler extends SQLiteOpenHelper {
                 new String[]{String.valueOf(user.getId())});
     }
 
+    public void updateChatMessages(String oldNumber, String newNumber) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_CM_CONTACT_NUMBER, newNumber);
+        db.update(TABLE_CHAT_MESSAGE, values, KEY_CM_CONTACT_NUMBER + " = ?", new String[] {oldNumber});
+        db.close();
+    }
+
     // DELETE: Deleting a user
     public void deleteUser() {
         SQLiteDatabase db = this.getWritableDatabase();
