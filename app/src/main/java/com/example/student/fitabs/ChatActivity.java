@@ -1,6 +1,7 @@
 package com.example.student.fitabs;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -60,12 +61,12 @@ public class ChatActivity extends AppCompatActivity implements Runnable {
 
         nameTo = (TextView) findViewById(R.id.contact);
         nameTo.setText(ContactsActivity.selectedContactName);
+        nameTo.setTextColor(Color.RED);
 
         editMessage = (EditText) findViewById(R.id.editMessage);
         chatWindow = (ListView) findViewById(R.id.chat);
 
         mAdapter = new ClientListAdapter(this, chatMessages);
-        chatWindow.setAdapter(mAdapter);
 
         readMsg();
 
