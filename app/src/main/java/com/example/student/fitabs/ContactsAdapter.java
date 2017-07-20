@@ -1,15 +1,13 @@
 package com.example.student.fitabs;
 import android.content.Context;
-import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import java.util.ArrayList;
-/**
- * Created by Sandra Bogusa on 17.14.7.
- */
+
 public class ContactsAdapter extends ArrayAdapter<User> {
     /**
      * Create a new {@link ContactsAdapter} object.
@@ -20,8 +18,10 @@ public class ContactsAdapter extends ArrayAdapter<User> {
     public ContactsAdapter(Context context, ArrayList<User> users) {
         super(context, 0, users);
     }
+
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    @NonNull
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         // Check if an existing view is being reused, otherwise inflate the view
         View listItemView = convertView;
         if (listItemView == null) {

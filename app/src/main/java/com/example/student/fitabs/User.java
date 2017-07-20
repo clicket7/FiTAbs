@@ -1,9 +1,5 @@
 package com.example.student.fitabs;
 
-/**
- * Created by KarishoK27 on 17.11.7.
- */
-
 public class User {
     private int id;
     private String name;

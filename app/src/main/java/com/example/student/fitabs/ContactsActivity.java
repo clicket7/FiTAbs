@@ -10,18 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.view.View.OnClickListener;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static android.R.attr.id;
-import static android.media.CamcorderProfile.get;
-import static com.example.student.fitabs.R.id.editUsername;
 
 public class ContactsActivity extends AppCompatActivity {
     private ArrayList<User> contacts;
@@ -35,7 +27,7 @@ public class ContactsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        contacts = new ArrayList<User>();
+        contacts = new ArrayList<>();
         setContentView(R.layout.activity_contacts);
         dbHandler = new DBHandler(this);
         id = new ArrayList<>();
@@ -105,6 +97,9 @@ public class ContactsActivity extends AppCompatActivity {
                     Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.noUserName), Toast.LENGTH_LONG);
                     toast.show();
                 }
+
+                cursor.close();
+                database.close();
             }
         });
     }
@@ -127,10 +122,5 @@ public class ContactsActivity extends AppCompatActivity {
     public void addContact(View view) {
         Intent intent = new Intent(ContactsActivity.this, AddContactActivity.class);
         startActivity(intent);
-    }
-
-    public void deleteContact(View view) {
-        Toast toast = Toast.makeText(getApplicationContext(), "It's not finished yet!", Toast.LENGTH_LONG);
-        toast.show();
     }
 }

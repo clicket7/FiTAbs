@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 import java.util.ArrayList;
 
@@ -22,11 +21,7 @@ public class UserSettingsActivity extends AppCompatActivity {
     EditText editUsername, editNumber, editIp;
     CheckBox checkStatus;
     DBHandler dbHandler;
-    Integer activeId;
     ArrayList<Integer> id = new ArrayList<>();
-    ArrayList<String> usernames = new ArrayList<>();
-    ArrayList<String> telNumber = new ArrayList<>();
-    ArrayList<Boolean> isTrener = new ArrayList<>();
     User user = new User();
 
     @Override

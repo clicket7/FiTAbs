@@ -9,10 +9,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by KarishoK27 on 17.17.7.
- */
-
 public class ClientListAdapter extends BaseAdapter {
 
     private ArrayList<String> mListItems;

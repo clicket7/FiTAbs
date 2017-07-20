@@ -12,10 +12,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-/**
- * Created by student on 17.18.7.
- */
-
 public class ExercisesActivity extends AppCompatActivity {
     private ArrayList<String> exercises;
     private ListView listExercises;
