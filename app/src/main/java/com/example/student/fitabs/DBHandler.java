@@ -141,6 +141,12 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void deleteAllExercises() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_EXERCISES, null, null);
+        db.close();
+    }
+
     public String getEvent(Day day) {
         String event = "";
         String date = day.getDay() + "/" + day.getMonth() + "/" + day.getYear();
@@ -310,8 +316,8 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
     // READ: Getting All Exercises by type
-    public List<Exercises> getExercisesByType(String type) {
-        List<Exercises> exerList = new ArrayList<>();
+    public ArrayList<Exercises> getExercisesByType(String type) {
+        ArrayList<Exercises> exerList = new ArrayList<>();
         // Select All Query
         String selectQuery = "SELECT * FROM " + TABLE_EXERCISES+ "WHERE exerciseType = ?" + type;
         SQLiteDatabase db = this.getWritableDatabase();
@@ -323,7 +329,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 exer.setType(cursor.getString(1));
                 exer.setExName(cursor.getString(2));
                 exer.setDescription(cursor.getString(3));
-                exer.setImage(cursor.getString(4));
+                exer.setImage(cursor.getBlob(4));
                 // Adding contact to list
                 exerList.add(exer);
             } while (cursor.moveToNext());

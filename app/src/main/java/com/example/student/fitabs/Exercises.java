@@ -5,16 +5,16 @@ public class Exercises {
     private String type;
     private String exName;
     private String description;
-    private String image;
+    private byte[] image;
 
     public Exercises () {
         this.type = "";
         this.exName = "";
         this.description = "";
-        this.image = "";
+        this.image = null;
     }
 
-    public Exercises (String type, String exName, String description, String image){
+    public Exercises (String type, String exName, String description, byte[] image){
         this.type = type;
         this.exName = exName;
         this.description = description;
@@ -53,11 +53,11 @@ public class Exercises {
         this.description = description;
     }
 
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 }

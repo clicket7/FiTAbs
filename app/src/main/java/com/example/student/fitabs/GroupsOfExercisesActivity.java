@@ -3,6 +3,8 @@ package com.example.student.fitabs;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -13,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,15 +100,75 @@ public class GroupsOfExercisesActivity extends AppCompatActivity {
     }
 
     public void readFromDatabase() {
-        SQLiteDatabase database = dbHandler.getReadableDatabase();
-        Cursor cursor = database.query(DBHandler.TABLE_EXERCISES,
-                null, null, null, null, null, null);
 
+        dbHandler.deleteAllExercises();
+        Bitmap bitmap;
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        byte[] image;
+
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.pushup);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        image = stream.toByteArray();
+        dbHandler.addExercise("Chest", "Decline Push-Up", "Move your feet up to a box or bench. Just do push-ups.", image);
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.chainpress);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        image = stream.toByteArray();
+        dbHandler.addExercise("Chest", "Chain Press", "Lower the chains by flexing the elbows, unloading some of the chain onto the floor.", image);
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.butterfly);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        image = stream.toByteArray();
+        dbHandler.addExercise("Chest", "ButterFly", "Sit on the machine with your back flat on the pad.Push the handles together slowly.", image);
+
+
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.burbellcurl);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        image = stream.toByteArray();
+        dbHandler.addExercise("Arms", "Barbell Curl ", "Stand up with your torso upright while holding a barbell at a shoulder-width grip.", image);
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.benchdips);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        image = stream.toByteArray();
+        dbHandler.addExercise("Arms", "Bench Dips", "Slowly lower your body as you inhale by bending at the elbows until you lower yourself far enough.", image);
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bodyup);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        image = stream.toByteArray();
+        dbHandler.addExercise("Arms", "Body-Up", "Slowly lower your forearms back to the ground by allowing the elbows to flex. Repeat for the desired number of repetitions.", image);
+
+
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.benchjump);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        image = stream.toByteArray();
+        dbHandler.addExercise("Legs", "Bench Jump", "Jump over the bench, landing with the knees bent, absorbing the impact through the legs.", image);
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bicycling);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        image = stream.toByteArray();
+        dbHandler.addExercise("Legs", "Bicycling", "To begin, seat yourself on the bike and adjust the seat to your height.", image);
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.bodyweightsquat);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        image = stream.toByteArray();
+        dbHandler.addExercise("Legs", "Bodyweight Squat", "Begin the movement by flexing your knees and hips, sitting back with your hips.", image);
+
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.situp);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        image = stream.toByteArray();
+        dbHandler.addExercise("Abs", "Sit-Up", "Flex your hips and spine to raise your torso toward your knees.", image);
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.airbike);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        image = stream.toByteArray();
+        dbHandler.addExercise("Abs", "Air Bike", "Slowly go through a cycle pedal motion kicking forward with the right leg and bringing in the knee of the left leg. Bring your right elbow close to your left knee by crunching to the side, as you breathe out.", image);
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.deadbug);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        image = stream.toByteArray();
+        dbHandler.addExercise("Abs", "Dead Bug", "Begin lying on your back with your hands extended above you toward the ceiling. Bring your feet, knees, and hips up to 90 degrees.", image);
+
+
+        String selectQuery = "SELECT DISTINCT " + dbHandler.KEY_EX_TYPE + " FROM " + dbHandler.TABLE_EXERCISES;
+        SQLiteDatabase db = dbHandler.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
-
-        } else {
-            Toast toast = Toast.makeText(getApplicationContext(), "Table is empty", Toast.LENGTH_LONG);
-            toast.show();
+            do {
+                groups.add(cursor.getString(0));
+            } while (cursor.moveToNext());
         }
 
         cursor.close();
