@@ -32,7 +32,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="10dp"/>
     <TextView
-        android:id="@+id/textContactUsername"
+        android:id="@+id/textUpdateUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Username"
@@ -46,15 +46,15 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="16dp" />
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textUpdateView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Change username"
-        app:layout_constraintTop_toBottomOf="@+id/textContactUsername"
+        app:layout_constraintTop_toBottomOf="@+id/textUpdateUsername"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/textContactUsername" />
+        app:layout_constraintLeft_toLeftOf="@+id/textUpdateUsername" />
     <TextView
-        android:id="@+id/textTelnumber"
+        android:id="@+id/textUpdateTelnumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Number"
@@ -63,19 +63,19 @@
         tools:layout_constraintTop_creator="1"
         android:layout_marginStart="16dp"
         android:layout_marginTop="30dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textUpdateView"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="16dp" />
     <TextView
-        android:id="@+id/textAboutNumber"
+        android:id="@+id/textUpdateAboutNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Change phone number"
         tools:layout_constraintTop_creator="1"
-        app:layout_constraintTop_toBottomOf="@+id/textTelnumber"
+        app:layout_constraintTop_toBottomOf="@+id/textUpdateTelnumber"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/textTelnumber" />
+        app:layout_constraintLeft_toLeftOf="@+id/textUpdateTelnumber" />
     <EditText
         android:id="@+id/updateUsername"
         android:layout_width="wrap_content"
@@ -85,12 +85,12 @@
         android:ems="10"
         android:inputType="text"
         android:text=""
-        app:layout_constraintLeft_toRightOf="@+id/textContactUsername"
+        app:layout_constraintLeft_toRightOf="@+id/textUpdateUsername"
         tools:layout_constraintTop_creator="1"
         tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/textUpdateView"
         android:layout_marginStart="55dp"
-        app:layout_constraintTop_toTopOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="@+id/textUpdateView" />
     <EditText
         android:id="@+id/updateTelnum"
         android:layout_width="wrap_content"
@@ -101,9 +101,9 @@
         android:inputType="numberDecimal"
         android:maxLength="8"
         android:text=""
-        app:layout_constraintLeft_toRightOf="@+id/textTelnumber"
+        app:layout_constraintLeft_toRightOf="@+id/textUpdateTelnumber"
         tools:layout_constraintTop_creator="1"
         android:layout_marginStart="72dp"
         android:layout_marginTop="25dp"
-        app:layout_constraintTop_toBottomOf="@+id/createUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/updateUsername" />
 </android.support.constraint.ConstraintLayout>
