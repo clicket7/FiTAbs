@@ -1,9 +1,5 @@
 package com.example.student.fitabs;
 
-/**
- * Created by student on 17.14.7.
- */
-
 import java.io.Serializable;
 
 public class Day implements Serializable {

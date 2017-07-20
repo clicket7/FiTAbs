@@ -1,7 +1,5 @@
 package com.example.student.fitabs;
 
-
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -52,7 +50,7 @@ public class MyCalendarActivity extends AppCompatActivity implements View.OnClic
         _ButtonSave.setOnClickListener(this);
         _Calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 selectedDateChanged(view, year, month, dayOfMonth);
             }
 
@@ -98,10 +96,6 @@ public class MyCalendarActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-    /**
-     * Method called when the Save/Edit button is clicked
-     * @param view
-     */
     public void onClick(View view){
         String buttonText = _ButtonSave.getText().toString();
 
@@ -124,7 +118,7 @@ public class MyCalendarActivity extends AppCompatActivity implements View.OnClic
     }
     /**
      * Handles saving schedule
-     * @param View view - current view
+     * @param view - current view
      */
     private void handleSave(View view){
         _ButtonSave.setText(R.string.btn_edit);
@@ -224,7 +218,6 @@ public class MyCalendarActivity extends AppCompatActivity implements View.OnClic
         for(Day day : _Schedule){
             if(daysAreEqual(day, dayToCheck)){
                 alreadyContains = true;
-                return alreadyContains;
             }
         }
         return alreadyContains;
